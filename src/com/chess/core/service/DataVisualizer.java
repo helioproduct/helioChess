@@ -28,7 +28,7 @@ public class DataVisualizer {
         for (int i = 0; i < 64; i++) {
             int x = getColumnNumber(i);
             int y = getRowNumber(i);
-            boardArray[y][x] = board.getBoardConfig()[i].toString();
+            boardArray[y][x] = board.getBoardConfiguration()[i].toString();
         }
         return boardArray;
     }

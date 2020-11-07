@@ -9,15 +9,10 @@ public class Tile {
 
     private Alliance allianceOnTile;
 
-    /*
-        Теперь board
-        там надо просчитыать ходы
-        и ставить альянс на плитки
-    */
-
     public Tile(int coordinate, Piece piece) {
         this.coordinate = coordinate;
         setPiece(piece);
+        this.allianceOnTile = null;
     }
 
     public int getTileCoordinate() {
@@ -27,6 +22,11 @@ public class Tile {
     public boolean isTileOccupied() {
         return this.pieceOnTile != null;
     }
+
+    public Piece getPiece() {
+        return this.pieceOnTile;
+    }
+
     public void clearTile() {
         this.pieceOnTile = null;
     }
@@ -34,15 +34,19 @@ public class Tile {
     public void setPiece(Piece pieceOnTile) {
         this.pieceOnTile = pieceOnTile;
     }
-    public void setAllianceOnTile(Alliance allianceOnTile) {
+
+    public void changeAllianceOnTile(Alliance allianceOnTile) {
         this.allianceOnTile = allianceOnTile;
     }
+
     public Alliance getAllianceOnTile() {
         return this.allianceOnTile;
     }
 
-    public Piece getPiece() {
-        return this.pieceOnTile;
+    public String tileAllianceToString() {
+        if (this.allianceOnTile == null) return "-";
+        else if (this.allianceOnTile.equals(Alliance.WHITE)) return "W";
+        return "B";
     }
 
     @Override

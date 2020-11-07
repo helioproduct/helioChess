@@ -9,6 +9,7 @@ import com.chess.core.service.Converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import static com.chess.core.move.Move.createMove;
 
@@ -16,11 +17,11 @@ public class Main {
     public static void main(String[] args) {
 
         Board board = new Board();
-        Move move = createMove(board, board.getPiece(48), 40, null);
+        System.out.println(board);
 
         Player white = board.getPlayer(Alliance.WHITE);
-        white.makeMove(48, 24);
-        
-        System.out.println(board);
+        white.updateLegalMoves();
+
+        board.visualizeTileAlliance();
     }
 }

@@ -42,6 +42,8 @@ public class Queen extends Piece {
                 // Tile is Empty
                 if (!getBoard().getTile(position).isTileOccupied()) {
                     move = createMove(getBoard(), this, position, null);
+
+                    getBoard().changeAllianceOnTile(position, getPieceAlliance());
                     legalMoves.add(move);
                 }
                 // Tile is Occupied
@@ -50,6 +52,8 @@ public class Queen extends Piece {
                     // Break when tile is Occupied by the same Alliance
                     if (!piece.getPieceAlliance().equals(this.getPieceAlliance())) {
                         move = createMove(getBoard(), this, position, piece);
+
+                        getBoard().changeAllianceOnTile(position, getPieceAlliance());
                         legalMoves.add(move);
                     }
                     break;
@@ -72,6 +76,8 @@ public class Queen extends Piece {
                     // Tile is Empty
                     if (!this.getBoard().getTile(destination).isTileOccupied()) {
                         move = createMove(getBoard(), this, destination, null);
+
+                        getBoard().changeAllianceOnTile(destination, getPieceAlliance());
                         legalMoves.add(move);
                     }
                     // Tile is Occupied
@@ -79,6 +85,8 @@ public class Queen extends Piece {
                         Piece pieceOnTile = getBoard().getPiece(destination);
                         if (!pieceOnTile.getPieceAlliance().equals(this.getPieceAlliance())) {
                             move = createMove(getBoard(), this, destination, pieceOnTile);
+
+                            getBoard().changeAllianceOnTile(destination, getPieceAlliance());
                             legalMoves.add(move);
                         } break;
                     }
@@ -95,6 +103,8 @@ public class Queen extends Piece {
                     // Tile is empty
                     if (!this.getBoard().getTile(destination).isTileOccupied()) {
                         move = createMove(getBoard(), this, destination, null);
+
+                        getBoard().changeAllianceOnTile(destination, getPieceAlliance());
                         legalMoves.add(move);
                     }
                     // Tile is occupied
@@ -102,6 +112,8 @@ public class Queen extends Piece {
                         Piece pieceOnTile = getBoard().getPiece(destination);
                         if (!pieceOnTile.getPieceAlliance().equals(this.getPieceAlliance())) {
                             move = createMove(getBoard(), this, destination, pieceOnTile);
+
+                            getBoard().changeAllianceOnTile(destination, getPieceAlliance());
                             legalMoves.add(move);
                         } break;
                     }

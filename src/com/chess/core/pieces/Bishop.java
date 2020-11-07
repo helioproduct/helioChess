@@ -40,6 +40,8 @@ public class Bishop extends Piece {
                     // Tile is empty
                     if (!this.getBoard().getTile(destination).isTileOccupied()) {
                         move = createMove(getBoard(), this, destination, null);
+
+                        getBoard().changeAllianceOnTile(destination, getPieceAlliance());
                         legalMoves.add(move);
                     }
                     // Tile is occupied
@@ -47,6 +49,8 @@ public class Bishop extends Piece {
                         Piece pieceOnTile = getBoard().getPiece(destination);
                         if (!pieceOnTile.getPieceAlliance().equals(this.getPieceAlliance())) {
                             move = createMove(getBoard(), this, destination, pieceOnTile);
+
+                            getBoard().changeAllianceOnTile(destination, getPieceAlliance());
                             legalMoves.add(move);
                         } break;
                     }
@@ -65,6 +69,8 @@ public class Bishop extends Piece {
                     // Tile is empty
                     if (!this.getBoard().getTile(destination).isTileOccupied()) {
                         move = createMove(getBoard(), this, destination, null);
+
+                        getBoard().changeAllianceOnTile(destination, getPieceAlliance());
                         legalMoves.add(move);
                     }
                     // Tile is occupied
@@ -72,6 +78,8 @@ public class Bishop extends Piece {
                         Piece pieceOnTile = getBoard().getPiece(destination);
                         if (!pieceOnTile.getPieceAlliance().equals(this.getPieceAlliance())) {
                             move = createMove(getBoard(), this, destination, pieceOnTile);
+
+                            getBoard().changeAllianceOnTile(destination, getPieceAlliance());
                             legalMoves.add(move);
                         } break;
                     }

@@ -66,6 +66,9 @@ public class Pawn extends Piece {
                 Piece pieceOnTile = getBoard().getPiece(destination);
                 if (!pieceOnTile.getPieceAlliance().equals(this.getPieceAlliance())) {
                     attackMoves.add(createMove(getBoard(), this, destination, pieceOnTile));
+
+                    // Changing Alliance On Tile
+                    getBoard().changeAllianceOnTile(destination, getPieceAlliance());
                 }
             }
         }
@@ -77,6 +80,9 @@ public class Pawn extends Piece {
                 Piece pieceOnTile = getBoard().getPiece(destination);
                 if (!pieceOnTile.getPieceAlliance().equals(this.getPieceAlliance())) {
                     attackMoves.add(createMove(getBoard(), this, destination, pieceOnTile));
+
+                    // Changing Alliance On Tile
+                    getBoard().changeAllianceOnTile(destination, getPieceAlliance());
                 }
             }
         }
@@ -90,11 +96,8 @@ public class Pawn extends Piece {
     }
 
     private boolean isAbleToJump() {
-        if (getPieceAlliance().equals(Alliance.WHITE)) {
-            return getRowNumber(getPiecePosition()) == 6;
-        } else {
-            return getRowNumber(getPiecePosition()) == 1;
-        }
+        if (getPieceAlliance().equals(Alliance.WHITE)) return getRowNumber(getPiecePosition()) == 6;
+        return getRowNumber(getPiecePosition()) == 1;
     }
 
     private boolean isValidColumn(int candidateCoordinate) {
