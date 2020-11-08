@@ -3,8 +3,10 @@ package com.chess.core.game.player;
 import com.chess.core.board.Board;
 import com.chess.core.game.Alliance;
 import com.chess.core.move.Move;
+import com.chess.core.pieces.King;
 import com.chess.core.pieces.Piece;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Player {
@@ -13,21 +15,19 @@ public abstract class Player {
     private final Alliance alliance;
     private final String name;
 
+    protected boolean isCheck;
     private List<Move> legalMoves;
+    private King playerKing;
 
     public Player(Board board, Alliance alliance, String name) {
         this.board = board;
         this.alliance = alliance;
         this.name = name;
-
-        this.legalMoves = this.board.calculateLegalMoves(this.getPlayerAlliance());
+        this.legalMoves = calculateLegalMoves();
+        this.playerKing = board.getKing(getPlayerAlliance());
     }
 
     public abstract Player getOpponent();
-
-    private void updateLegalMoves() {
-        this.legalMoves = getBoard().calculateLegalMoves(getPlayerAlliance());
-    }
 
     public void makeMove(int currentPosition, int destination) {
         Piece pieceToMove = null;
@@ -39,15 +39,26 @@ public abstract class Player {
         } catch (NullPointerException e) {
             // TODO : GUI Implementation of doing everything
         }
+
         Move move = Move.createMove(this.board, pieceToMove, destination, pieceToAttack);
-        if (isMoveLegal(move)) {
-            this.board.changePiecePosition(move);
-        }
-        this.getOpponent().updateLegalMoves();
+
+        if (isMoveLegal(move)) this.board.changePiecePosition(move);
+
+        this.getOpponent().calculateLegalMoves();
     }
 
-    private boolean isMoveLegal(Move move) {
-        //return this.legalMoves.contains(move);
+    private List<Move> calculateLegalMoves() {
+        List<Move> legalMoves = new ArrayList<>();
+        for (Piece piece : getActivePieces()) legalMoves.addAll(piece.calculateLegalMoves());
+        return legalMoves;
+    }
+
+    // Use it for manual updating legal moves
+    public void updateLegalMoves() {
+        this.legalMoves = calculateLegalMoves();
+    }
+
+    public boolean isMoveLegal(Move move) {
         for (Move legalMove : legalMoves) {
             if (move.equals(legalMove)) return true;
         }
@@ -57,21 +68,20 @@ public abstract class Player {
     public Alliance getPlayerAlliance() {
         return this.alliance;
     }
+
     public List<Piece> getActivePieces() {
         return this.board.getPieces(this.getPlayerAlliance());
     }
-    public boolean isCheck() {
-        return false;
-    }
-    public Board getBoard() {
-        return this.board;
+
+    public King getPlayerKing() {
+        return this.playerKing;
     }
 
-
-    public boolean isCheckMate() {
-        return isCheck() && false;
-    }
     public List<Move> getLegalMoves() {
         return this.legalMoves;
+    }
+
+    public Board getBoard() {
+        return this.board;
     }
 }
