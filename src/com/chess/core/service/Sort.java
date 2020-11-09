@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Sort {
+
     public static boolean isSorted(int[] array, boolean ascending) {
         for (int i = 0; i < array.length - 1; i++) {
             if (array[i] > array[i + 1]) {

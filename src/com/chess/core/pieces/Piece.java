@@ -4,6 +4,7 @@ import com.chess.core.board.Board;
 import com.chess.core.game.Alliance;
 import com.chess.core.move.Move;
 
+import java.awt.*;
 import java.util.List;
 
 public abstract class Piece {
@@ -16,6 +17,9 @@ public abstract class Piece {
 
     private final int cachedHashCode;
 
+    // GUI
+    private final Color color;
+
     public Piece(Board board, int position, Alliance alliance) {
         this.board = board;
         this.position = position;
@@ -23,6 +27,9 @@ public abstract class Piece {
         this.pieceName = this.getClass().getSimpleName();
 
         this.cachedHashCode = calculateHashCode();
+
+        if (this.alliance.equals(Alliance.WHITE)) this.color = Color.WHITE;
+        else this.color = Color.BLACK;
     }
 
     public abstract List<Move> calculateLegalMoves();
@@ -61,5 +68,10 @@ public abstract class Piece {
     public String toString() {
         if (getPieceAlliance().equals(Alliance.WHITE)) return String.valueOf(this.getPieceName().toCharArray()[0]);
         return String.valueOf(this.getPieceName().toCharArray()[0]).toLowerCase();
+    }
+
+    // GUI
+    public Color getColor() {
+        return this.color;
     }
 }

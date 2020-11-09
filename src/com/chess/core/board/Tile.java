@@ -3,14 +3,22 @@ package com.chess.core.board;
 import com.chess.core.game.Alliance;
 import com.chess.core.pieces.Piece;
 
+import java.awt.*;
+import com.chess.core.GUI.ColorPalette;
+
 public class Tile {
     private final int coordinate;
     private Piece pieceOnTile;
 
     private Alliance allianceOnTile;
+    private final Color color;
 
     public Tile(int coordinate, Piece piece) {
         this.coordinate = coordinate;
+
+        if (coordinate % 2 == 0) this.color = ColorPalette.TILE_LIGHT;
+        else this.color = ColorPalette.TILE_DARK;
+
         setPiece(piece);
         this.allianceOnTile = null;
     }
@@ -53,5 +61,11 @@ public class Tile {
     public String toString() {
         if (isTileOccupied()) return this.getPiece().toString();
         return "-";
+    }
+
+    // GUI
+
+    public Color getColor() {
+        return this.color;
     }
 }
