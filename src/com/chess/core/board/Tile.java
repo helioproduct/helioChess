@@ -5,6 +5,7 @@ import com.chess.core.pieces.Piece;
 
 import java.awt.*;
 import com.chess.core.GUI.ColorPalette;
+import com.chess.core.service.Converter;
 
 public class Tile {
     private final int coordinate;
@@ -16,7 +17,7 @@ public class Tile {
     public Tile(int coordinate, Piece piece) {
         this.coordinate = coordinate;
 
-        if (coordinate % 2 == 0) this.color = ColorPalette.TILE_LIGHT;
+        if ((Converter.getColumnNumber(coordinate) + Converter.getRowNumber(coordinate)) % 2 == 0) this.color = ColorPalette.TILE_LIGHT;
         else this.color = ColorPalette.TILE_DARK;
 
         setPiece(piece);

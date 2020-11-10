@@ -12,7 +12,7 @@ public interface GraphicConnector {
     void init();
     void drawTile(Tile tile);   // tile.getColor();
     void drawBoard(Board board);    // Я так понимаю здесь ты будешь вызывать drawTile();
-    void drawPieces(Piece piece);   // Use piece.getColor();
+    void drawPiece(Piece piece);   // Use piece.getColor();
     void drawPieces(ArrayList<Piece> pieceList);
 
     void movePiece(int currentPosition, int destination);
