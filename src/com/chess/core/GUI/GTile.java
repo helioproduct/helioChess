@@ -2,15 +2,20 @@ package com.chess.core.GUI;
 
 import com.chess.core.service.Converter;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class GTile extends JComponent {
 
     private final int x, y;
     private Color color;
+    private Image pieceImage;
 
     public GTile(int position, Color color) {
         this.x = Converter.getColumnNumber(position);
@@ -50,6 +55,12 @@ public class GTile extends JComponent {
         super.paintComponent(g);
         g.setColor(color);
         g.fillRect(0, 0, 50, 50);
+        g.drawImage(pieceImage, 0, 0, 50, 50, this);
+    }
+
+    public void drawPiece(Image pieceImage) {
+        this.pieceImage = pieceImage;
+        this.repaint();
     }
 
     @Override
