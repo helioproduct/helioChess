@@ -4,15 +4,9 @@ import com.chess.core.GUI.MainFrame;
 import com.chess.core.board.Board;
 import com.chess.core.game.Alliance;
 import com.chess.core.game.player.Player;
-import com.chess.core.move.Move;
-import com.chess.core.pieces.*;
-import com.chess.core.service.Converter;
+import com.chess.core.pieces.Piece;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
-import static com.chess.core.move.Move.createMove;
 
 public class Main {
     public static void main(String[] args) {
@@ -28,5 +22,7 @@ public class Main {
         MainFrame mainFrame = new MainFrame();
         mainFrame.init();
         mainFrame.drawBoard(board);
+        mainFrame.drawPieces((ArrayList<Piece>) board.getPieces(Alliance.BLACK));
+        mainFrame.drawPieces((ArrayList<Piece>) board.getPieces(Alliance.WHITE));
     }
 }
