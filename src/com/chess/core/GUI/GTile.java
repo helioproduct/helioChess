@@ -16,6 +16,7 @@ public class GTile extends JComponent {
     private final int x, y;
     private Color color;
     private Image pieceImage;
+    private boolean targeted;
 
     public GTile(int position, Color color) {
         this.x = Converter.getColumnNumber(position);
@@ -25,12 +26,12 @@ public class GTile extends JComponent {
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
+                System.out.println(position);
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-                System.out.println(position);
+
             }
 
             @Override
@@ -56,10 +57,29 @@ public class GTile extends JComponent {
         g.setColor(color);
         g.fillRect(0, 0, 50, 50);
         g.drawImage(pieceImage, 0, 0, 50, 50, this);
+        if (targeted) {
+            g.setColor(Color.GREEN);
+            g.fillOval(15, 15, 20, 20);
+        }
     }
 
     public void drawPiece(Image pieceImage) {
         this.pieceImage = pieceImage;
+        this.repaint();
+    }
+
+    public void removePiece() {
+        this.pieceImage = null;
+        this.repaint();
+    }
+
+    public void makeTargeted() {
+        this.targeted = true;
+        this.repaint();
+    }
+
+    public void makeOrdinary() {
+        this.targeted = false;
         this.repaint();
     }
 
@@ -76,4 +96,7 @@ public class GTile extends JComponent {
         return y;
     }
 
+    public Image getPieceImage() {
+        return pieceImage;
+    }
 }
