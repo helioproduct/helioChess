@@ -72,7 +72,6 @@ public class MainFrame implements GraphicConnector {
         }
 
         imagePath = "pieces/" + color + "/" + pieceName + ".png";
-        System.out.println(imagePath);
 
         Image pieceImage = null;
         try {
@@ -90,27 +89,42 @@ public class MainFrame implements GraphicConnector {
 
     @Override
     public void movePiece(int currentPosition, int destination) {
+        GTile currentTile = (GTile) board.getComponent(currentPosition);
+        GTile destinationTile = (GTile) board.getComponent(destination);
 
+        Image pieceImage = currentTile.getPieceImage();
+
+        if (pieceImage == null) {
+            System.out.println("There is no piece on this tile");
+            return;
+        }
+
+        currentTile.removePiece();
+        destinationTile.drawPiece(pieceImage);
     }
 
     @Override
     public void showLegalMoves(int[] legalMovesPositions) {
-
+        for (int i:legalMovesPositions) {
+            GTile tile = (GTile) board.getComponent(i);
+            tile.makeTargeted();
+        }
     }
 
     @Override
     public void removePiece(int removedPiecePosition) {
-
+        GTile tile = (GTile) board.getComponent(removedPiecePosition);
+        tile.removePiece();
     }
 
     @Override
     public void showCheckPopup() {
-
+        JOptionPane.showMessageDialog(frame, "Check!", "Message", JOptionPane.WARNING_MESSAGE);
     }
 
     @Override
     public void showCheckMatePopup() {
-
+        JOptionPane.showMessageDialog(frame, "Check Mate!", "Message", JOptionPane.ERROR_MESSAGE);
     }
 
     @Override

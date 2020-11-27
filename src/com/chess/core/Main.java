@@ -24,5 +24,7 @@ public class Main {
         mainFrame.drawBoard(board);
         mainFrame.drawPieces((ArrayList<Piece>) board.getPieces(Alliance.BLACK));
         mainFrame.drawPieces((ArrayList<Piece>) board.getPieces(Alliance.WHITE));
+        mainFrame.showCheckPopup();
+        mainFrame.showCheckMatePopup();
     }
 }
