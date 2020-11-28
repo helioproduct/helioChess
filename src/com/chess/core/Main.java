@@ -3,21 +3,18 @@ package com.chess.core;
 import com.chess.core.GUI.MainFrame;
 import com.chess.core.board.Board;
 import com.chess.core.game.Alliance;
+import com.chess.core.game.Game;
 import com.chess.core.game.player.Player;
 import com.chess.core.pieces.Piece;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class Main {
     public static void main(String[] args) {
 
         Board board = new Board();
-        System.out.println(board);
-
-        Player white = board.getPlayer(Alliance.WHITE);
-        white.updateLegalMoves();
-
-        board.visualizeTileAlliance();
 
         MainFrame mainFrame = new MainFrame();
         mainFrame.init();
@@ -27,6 +24,5 @@ public class Main {
         mainFrame.showCheckPopup();
         mainFrame.showCheckMatePopup();
 
-        System.out.println("git test");
     }
 }

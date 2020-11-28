@@ -2,17 +2,16 @@ package com.chess.core.game.player;
 
 import com.chess.core.game.Alliance;
 import com.chess.core.game.Game;
-import com.chess.core.move.Move;
 
-public class BlackPlayer extends Player {
+public class WhitePlayer extends Player {
 
-    public BlackPlayer(Game game) {
-        super(game, Alliance.BLACK, "BlackPlayer");
+    public WhitePlayer(Game game) {
+        super(game, Alliance.WHITE, "WhitePlayer");
     }
 
     @Override
     public Player getOpponent() {
-        return this.game.getPlayer(Alliance.WHITE);
+        return this.game.getPlayer(Alliance.BLACK);
     }
 
     @Override

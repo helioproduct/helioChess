@@ -1,9 +1,6 @@
 package com.chess.core.board;
 
 import com.chess.core.game.Alliance;
-import com.chess.core.game.player.BlackPlayer;
-import com.chess.core.game.player.Player;
-import com.chess.core.game.player.WhitePLayer;
 import com.chess.core.move.Move;
 import com.chess.core.pieces.*;
 
@@ -17,13 +14,10 @@ import static com.chess.core.service.Converter.getRowNumber;
 import static com.chess.core.service.Converter.getColumnNumber;
 
 public class Board {
-    private Tile[] board;
+    private final Tile[] board;
 
     private List<Piece> whitePieces = new ArrayList<>();
     private List<Piece> blackPieces = new ArrayList<>();
-
-    private final Player whitePlayer;
-    private final Player blackPlayer;
 
     private King whiteKing;
     private King blackKing;
@@ -31,9 +25,6 @@ public class Board {
     public Board() {
         this.board = createEmptyBoard();
         spawnPieces();
-
-        this.whitePlayer = new WhitePLayer(this, "WhitePLayer");
-        this.blackPlayer = new BlackPlayer(this, "BlackPlayer");
     }
 
     private Tile[] createEmptyBoard() {
@@ -63,12 +54,7 @@ public class Board {
 
     public List<Piece> getPieces(Alliance alliance) {
         if (alliance.equals(Alliance.WHITE)) return whitePieces;
-        else return blackPieces;
-    }
-
-    public Player getPlayer(Alliance alliance) {
-        if (alliance.equals(Alliance.WHITE)) return this.whitePlayer;
-        else return this.blackPlayer;
+        return blackPieces;
     }
 
     public King getKing(Alliance alliance) {
@@ -76,6 +62,7 @@ public class Board {
         return this.blackKing;
     }
 
+    // Changes the alliance of tiles when calculating legal moves
     public void changeAllianceOnTile(int tilePosition, Alliance alliance) {
         this.board[tilePosition].changeAllianceOnTile(alliance);
     }
@@ -89,12 +76,12 @@ public class Board {
     }
 
     public void spawnPieces() {
+        // White
         setPiece(0, new Rook(this, 0, Alliance.BLACK));
         setPiece(1, new Knight(this, 1, Alliance.BLACK));
         setPiece(2, new Bishop(this, 2, Alliance.BLACK));
         setPiece(3, new Queen(this, 3, Alliance.BLACK));
         setPiece(4, new King(this, 4, Alliance.BLACK));
-        this.blackKing = (King) this.getPiece(4);
         setPiece(5, new Bishop(this, 5, Alliance.BLACK));
         setPiece(6, new Knight(this, 6, Alliance.BLACK));
         setPiece(7, new Rook(this, 7, Alliance.BLACK));
@@ -107,12 +94,12 @@ public class Board {
         setPiece(14, new Pawn(this, 14, Alliance.BLACK));
         setPiece(15, new Pawn(this, 15, Alliance.BLACK));
 
+        // Black
         setPiece(56, new Rook(this, 56, Alliance.WHITE));
         setPiece(57, new Knight(this, 57, Alliance.WHITE));
         setPiece(58, new Bishop(this, 58, Alliance.WHITE));
         setPiece(59, new Queen(this, 59, Alliance.WHITE));
         setPiece(60, new King(this, 60, Alliance.WHITE));
-        this.whiteKing = (King) this.getPiece(60);
         setPiece(61, new Bishop(this, 61, Alliance.WHITE));
         setPiece(62, new Knight(this, 62, Alliance.WHITE));
         setPiece(63, new Rook(this, 63, Alliance.WHITE));
@@ -124,6 +111,10 @@ public class Board {
         setPiece(53, new Pawn(this, 53, Alliance.WHITE));
         setPiece(54, new Pawn(this, 54, Alliance.WHITE));
         setPiece(55, new Pawn(this ,55, Alliance.WHITE));
+
+        // Saving kings
+        this.blackKing = (King) this.getPiece(4);
+        this.whiteKing = (King) this.getPiece(60);
     }
 
     public Tile[] getBoardConfiguration() {
@@ -158,7 +149,6 @@ public class Board {
                 board[y][x] = tile.tileAllianceToString();
             }
         }
-
         System.out.println(arrayToString(board));
     }
 

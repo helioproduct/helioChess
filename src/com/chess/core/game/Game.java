@@ -1,21 +1,39 @@
 package com.chess.core.game;
 
+import com.chess.core.board.Board;
+import com.chess.core.game.player.BlackPlayer;
+import com.chess.core.game.player.Player;
+import com.chess.core.game.player.WhitePlayer;
+
 public class Game {
 
-    private final int cachedHashCode;
+    private final Board board;
+    private final WhitePlayer whitePlayer;
+    private final BlackPlayer blackPlayer;
+
+    public Alliance allianceToMove;
+
+    private final int hashCode;
 
     public Game() {
-        this.cachedHashCode = calculateHashCode();
+        this.hashCode = (int) System.currentTimeMillis() * 31;
+        this.board = new Board();
+        this.whitePlayer = new WhitePlayer(this);
+        this.blackPlayer = new BlackPlayer(this);
+        this.allianceToMove = Alliance.WHITE;
     }
 
-    private int calculateHashCode() {
-        int result = (int) System.currentTimeMillis();
-        result *= 31;
-        return result;
+    public Player getPlayer(Alliance allianceOfPlayer) {
+        if (this.allianceToMove.equals(Alliance.WHITE)) return this.whitePlayer;
+        return this.blackPlayer;
+    }
+
+    public Board getBoard() {
+        return this.board;
     }
 
     @Override
     public int hashCode() {
-        return this.cachedHashCode;
+        return this.hashCode;
     }
 }
