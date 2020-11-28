@@ -26,5 +26,7 @@ public class Main {
         mainFrame.drawPieces((ArrayList<Piece>) board.getPieces(Alliance.WHITE));
         mainFrame.showCheckPopup();
         mainFrame.showCheckMatePopup();
+
+        System.out.println("git test");
     }
 }
