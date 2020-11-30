@@ -7,6 +7,7 @@ import com.chess.core.game.player.WhitePlayer;
 
 public class Game {
 
+    // Game - свзяующее звено для игроков, которое предоставляет им доступ к Board
     private final Board board;
     private final WhitePlayer whitePlayer;
     private final BlackPlayer blackPlayer;
@@ -21,6 +22,12 @@ public class Game {
         this.whitePlayer = new WhitePlayer(this);
         this.blackPlayer = new BlackPlayer(this);
         this.allianceToMove = Alliance.WHITE;
+    }
+
+    public void run() {
+        while (true) {
+            this.getPlayer(allianceToMove).makeMove();
+        }
     }
 
     public Player getPlayer(Alliance allianceOfPlayer) {

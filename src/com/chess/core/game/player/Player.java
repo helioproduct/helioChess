@@ -6,6 +6,7 @@ import com.chess.core.game.Game;
 import com.chess.core.move.Move;
 import com.chess.core.pieces.King;
 import java.util.List;
+import java.util.Scanner;
 
 public abstract class Player {
 
@@ -20,11 +21,18 @@ public abstract class Player {
         this.game = game;
         this.alliance = alliance;
         this.playerName = playerName;
+        // Saving king
         this.king = getBoard().getKing(getPlayerAlliance());
     }
 
     public void makeMove() {
-        // this.game.getBoard().changePiecePosition;
+        // this.game.getBoard().changePiecePosition
+        // something happens
+        Scanner scanner = new Scanner(System.in);
+        String scannedString = scanner.nextLine();
+        System.out.println(scannedString);
+
+        // Checking for check and or check and mate or something else
 
         this.nextMove();
     }

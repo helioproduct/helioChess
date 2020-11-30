@@ -17,6 +17,6 @@ public class BlackPlayer extends Player {
 
     @Override
     public void nextMove() {
-        this.game.allianceToMove = Alliance.BLACK;
+        this.game.allianceToMove = Alliance.WHITE;
     }
 }
