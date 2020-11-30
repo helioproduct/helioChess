@@ -5,8 +5,9 @@ import com.chess.core.game.Alliance;
 import com.chess.core.game.Game;
 import com.chess.core.move.Move;
 import com.chess.core.pieces.King;
-import java.util.List;
-import java.util.Scanner;
+import com.chess.core.pieces.Piece;
+
+import java.util.*;
 
 public abstract class Player {
 
@@ -14,27 +15,23 @@ public abstract class Player {
     private final Alliance alliance;
     private final String playerName;
 
-    private List<Move> legalMoves;
-    private King king;
-
     public Player(Game game, Alliance alliance, String playerName) {
         this.game = game;
         this.alliance = alliance;
         this.playerName = playerName;
-        // Saving king
-        this.king = getBoard().getKing(getPlayerAlliance());
     }
 
     public void makeMove() {
-        // this.game.getBoard().changePiecePosition
+
         // something happens
-        Scanner scanner = new Scanner(System.in);
-        String scannedString = scanner.nextLine();
-        System.out.println(scannedString);
 
         // Checking for check and or check and mate or something else
 
         this.nextMove();
+    }
+
+    public void updateLegalMoves() {
+        List<Move> legalMoves = new ArrayList<>();
     }
 
     public abstract void nextMove();
@@ -46,7 +43,7 @@ public abstract class Player {
     }
 
     public King getKing() {
-        return this.king;
+        return null;
     }
 
     public Board getBoard() {

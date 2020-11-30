@@ -7,8 +7,7 @@ import com.chess.core.service.Converter;
 
 import static com.chess.core.pieces.Rook.isValidPosition;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 import static com.chess.core.move.Move.createMove;
 import static com.chess.core.service.Converter.*;
@@ -26,8 +25,8 @@ public class Queen extends Piece {
     private final int[] DIRECTIONS = {-1, 1};
 
     @Override
-    public List<Move> calculateLegalMoves() {
-        List<Move> legalMoves = new ArrayList<>();
+    public HashSet<Move> calculateLegalMoves() {
+        HashSet<Move> legalMoves = new HashSet<>();
 
         // Row and column moves
         for (int offset : ROOK_OFFSETS) {

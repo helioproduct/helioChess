@@ -5,6 +5,8 @@ import com.chess.core.game.Alliance;
 import com.chess.core.move.Move;
 
 import java.awt.*;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 public abstract class Piece {
@@ -32,7 +34,7 @@ public abstract class Piece {
         else this.color = Color.BLACK;
     }
 
-    public abstract List<Move> calculateLegalMoves();
+    public abstract HashSet<Move> calculateLegalMoves();
 
     public void changePiecePosition(final Move move) {
         this.position = move.getDestinationPosition();

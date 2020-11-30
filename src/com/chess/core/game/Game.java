@@ -25,6 +25,7 @@ public class Game {
     }
 
     public void run() {
+        // while is not check mate
         while (true) {
             this.getPlayer(allianceToMove).makeMove();
         }

@@ -9,8 +9,7 @@ import static com.chess.core.service.Converter.isValidPosition;
 
 import static com.chess.core.move.Move.createMove;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 public class Knight extends Piece {
     public Knight(Board board, int piecePosition, Alliance alliance) {
@@ -20,8 +19,8 @@ public class Knight extends Piece {
     private final int[] OFFSETS = {-17, -15, -10, -6, 6, 10, 15, 17};
 
     @Override
-    public List<Move> calculateLegalMoves() {
-        List<Move> legalMoves = new ArrayList<>();
+    public HashSet<Move> calculateLegalMoves() {
+        HashSet<Move> legalMoves = new HashSet<>();
         for (int offset : OFFSETS) {
             int destination = getPiecePosition() + offset;
             if (isValidPosition(destination) && isValidColumn(getPiecePosition(), destination)) {

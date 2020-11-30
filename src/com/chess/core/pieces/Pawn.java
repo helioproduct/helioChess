@@ -8,8 +8,7 @@ import static com.chess.core.service.Converter.getRowNumber;
 import static com.chess.core.service.Converter.isValidPosition;
 import static com.chess.core.move.Move.createMove;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 public class Pawn extends Piece {
     public Pawn(Board board, int piecePosition, Alliance alliance) {
@@ -17,8 +16,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Move> calculateLegalMoves() {
-        List<Move> legalMoves = new ArrayList<>();
+    public HashSet<Move> calculateLegalMoves() {
+        HashSet<Move> legalMoves = new HashSet<>();
 
         int classicOffset = 8 * getDirection();
         int jumpOffset = 16 * getDirection();
@@ -52,8 +51,8 @@ public class Pawn extends Piece {
         return legalMoves;
     }
 
-    private List<Move> calculateAttackMoves() {
-        List<Move> attackMoves = new ArrayList<>();
+    private HashSet<Move> calculateAttackMoves() {
+        HashSet<Move> attackMoves = new HashSet<>();
 
         int attackOffsetLeft = 9 * getDirection();
         int attackOffsetRight = 7 * getDirection();

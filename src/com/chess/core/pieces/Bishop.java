@@ -5,8 +5,7 @@ import com.chess.core.game.Alliance;
 import com.chess.core.move.Move;
 import static com.chess.core.move.Move.createMove;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 import static com.chess.core.service.Converter.*;
 
@@ -18,8 +17,8 @@ public class Bishop extends Piece {
     private final int[] DIRECTIONS = {-1, 1};
 
     @Override
-    public List<Move> calculateLegalMoves() {
-        List<Move> legalMoves = new ArrayList<>();
+    public HashSet<Move> calculateLegalMoves() {
+        HashSet<Move> legalMoves = new HashSet<>(20);
 
         final int[] DIRECTIONS = {-1, 1};
 
