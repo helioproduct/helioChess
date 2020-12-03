@@ -5,7 +5,6 @@ import com.chess.core.board.Tile;
 import com.chess.core.game.Game;
 import com.chess.core.pieces.Piece;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public interface GraphicConnector {

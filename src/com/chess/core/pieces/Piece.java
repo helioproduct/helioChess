@@ -6,6 +6,7 @@ import com.chess.core.move.Move;
 
 import java.awt.*;
 import java.util.HashSet;
+import java.util.Iterator;
 
 public abstract class Piece {
 
@@ -62,6 +63,16 @@ public abstract class Piece {
         result = 31 * result + getPieceAlliance().hashCode();
         result = 31 * result + getPieceName().hashCode();
         return result;
+    }
+
+    public int[] getLegalMovesPositions() {
+        int[] positions = new int[this.legalMoves.size()];
+        int i = 0;
+        for (Move move : this.legalMoves) {
+            positions[i] = move.getDestinationPosition();
+            i += 1;
+        }
+        return positions;
     }
 
     @Override
