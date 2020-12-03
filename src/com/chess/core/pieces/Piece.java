@@ -5,7 +5,8 @@ import com.chess.core.game.Alliance;
 import com.chess.core.move.Move;
 
 import java.awt.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Iterator;
 
 public abstract class Piece {
 
@@ -14,6 +15,9 @@ public abstract class Piece {
     private int position;
     private final Alliance alliance;
     private final String pieceName;
+
+    // LegalMoves
+    protected HashSet<Move> legalMoves = new HashSet<>(32);
 
     private final int cachedHashCode;
 
@@ -32,7 +36,7 @@ public abstract class Piece {
         else this.color = Color.BLACK;
     }
 
-    public abstract List<Move> calculateLegalMoves();
+    public abstract void calculateLegalMoves();
 
     public void changePiecePosition(final Move move) {
         this.position = move.getDestinationPosition();
@@ -50,13 +54,25 @@ public abstract class Piece {
     public Alliance getPieceAlliance() {
         return this.alliance;
     }
-
+    public HashSet<Move> getLegalMoves() {
+        return this.legalMoves;
+    }
 
     private int calculateHashCode() {
         int result = 1;
         result = 31 * result + getPieceAlliance().hashCode();
         result = 31 * result + getPieceName().hashCode();
         return result;
+    }
+
+    public int[] getLegalMovesPositions() {
+        int[] positions = new int[this.legalMoves.size()];
+        int i = 0;
+        for (Move move : this.legalMoves) {
+            positions[i] = move.getDestinationPosition();
+            i += 1;
+        }
+        return positions;
     }
 
     @Override

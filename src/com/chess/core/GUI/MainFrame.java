@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class MainFrame implements GraphicConnector {
 
@@ -83,7 +84,7 @@ public class MainFrame implements GraphicConnector {
     }
 
     @Override
-    public void drawPieces(ArrayList<Piece> pieceList) {
+    public void drawPieces(HashSet<Piece> pieceList) {
         pieceList.forEach(this::drawPiece);
     }
 

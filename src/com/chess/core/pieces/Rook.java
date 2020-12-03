@@ -7,8 +7,7 @@ import static com.chess.core.service.Converter.getRowNumber;
 import static com.chess.core.service.Converter.getColumnNumber;
 import static com.chess.core.move.Move.createMove;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 public class Rook extends Piece {
     public Rook(Board board, int piecePosition, Alliance alliance) {
@@ -17,8 +16,7 @@ public class Rook extends Piece {
 
     private final int[] OFFSETS = {-8, 8, -1, 1};
 
-    public List<Move> calculateLegalMoves() {
-        List<Move> legalMoves = new ArrayList<>();
+    public void calculateLegalMoves() {
         for (int offset : OFFSETS) {
             int position = this.getPiecePosition();
             int stepsCount = 1;
@@ -33,7 +31,7 @@ public class Rook extends Piece {
                     move = createMove(getBoard(), this, position, null);
 
                     getBoard().changeAllianceOnTile(position, getPieceAlliance());
-                    legalMoves.add(move);
+                    this.legalMoves.add(move);
                 }
                 // Tile is Occupied
                 else {
@@ -43,13 +41,12 @@ public class Rook extends Piece {
                         move = createMove(getBoard(), this, position, piece);
 
                         getBoard().changeAllianceOnTile(position, getPieceAlliance());
-                        legalMoves.add(move);
+                        this.legalMoves.add(move);
                     }
                     break;
                 }
             }
         }
-        return legalMoves;
     }
 
     public static boolean isValidPosition(int currentPosition, int candidatePosition) {

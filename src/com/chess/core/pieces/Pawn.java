@@ -2,14 +2,10 @@ package com.chess.core.pieces;
 
 import com.chess.core.board.Board;
 import com.chess.core.game.Alliance;
-import com.chess.core.move.Move;
 import static com.chess.core.service.Converter.getColumnNumber;
 import static com.chess.core.service.Converter.getRowNumber;
 import static com.chess.core.service.Converter.isValidPosition;
 import static com.chess.core.move.Move.createMove;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Pawn extends Piece {
     public Pawn(Board board, int piecePosition, Alliance alliance) {
@@ -17,8 +13,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Move> calculateLegalMoves() {
-        List<Move> legalMoves = new ArrayList<>();
+    public void calculateLegalMoves() {
 
         int classicOffset = 8 * getDirection();
         int jumpOffset = 16 * getDirection();
@@ -27,7 +22,7 @@ public class Pawn extends Piece {
         int destination = getPiecePosition() + classicOffset;
         if (isValidPosition(destination)) {
             if (!this.getBoard().getTile(destination).isTileOccupied()) {
-                legalMoves.add(createMove(getBoard(), this, destination, null));
+                this.legalMoves.add(createMove(getBoard(), this, destination, null));
             }
         }
 
@@ -38,7 +33,7 @@ public class Pawn extends Piece {
                 if (!getBoard().getTile(getPiecePosition() + classicOffset).isTileOccupied()
                         && isValidPosition(destination)) {
                     if (!getBoard().getTile(destination).isTileOccupied()) {
-                        legalMoves.add(createMove(getBoard(), this, destination, null));
+                        this.legalMoves.add(createMove(getBoard(), this, destination, null));
                     }
                 }
             }
@@ -47,13 +42,10 @@ public class Pawn extends Piece {
         // TODO : Превращение пешки
         // TODO : En-Passant move
 
-        legalMoves.addAll(calculateAttackMoves());
-
-        return legalMoves;
+        calculateAttackMoves();
     }
 
-    private List<Move> calculateAttackMoves() {
-        List<Move> attackMoves = new ArrayList<>();
+    private void calculateAttackMoves() {
 
         int attackOffsetLeft = 9 * getDirection();
         int attackOffsetRight = 7 * getDirection();
@@ -62,13 +54,14 @@ public class Pawn extends Piece {
         int destination = getPiecePosition() + attackOffsetLeft;
 
         if (isValidPosition(destination) && isValidColumn(destination)) {
+
+            // Changing Alliance On Tile
+            getBoard().changeAllianceOnTile(destination, getPieceAlliance());
+
             if (getBoard().getTile(destination).isTileOccupied()) {
                 Piece pieceOnTile = getBoard().getPiece(destination);
                 if (!pieceOnTile.getPieceAlliance().equals(this.getPieceAlliance())) {
-                    attackMoves.add(createMove(getBoard(), this, destination, pieceOnTile));
-
-                    // Changing Alliance On Tile
-                    getBoard().changeAllianceOnTile(destination, getPieceAlliance());
+                    this.legalMoves.add(createMove(getBoard(), this, destination, pieceOnTile));
                 }
             }
         }
@@ -76,18 +69,17 @@ public class Pawn extends Piece {
         // Right-Attack move
         destination = getPiecePosition() + attackOffsetRight;
         if (isValidPosition(destination) && isValidColumn(destination)) {
+
+            // Changing Alliance On Tile
+            getBoard().changeAllianceOnTile(destination, getPieceAlliance());
+
             if (getBoard().getTile(destination).isTileOccupied()) {
                 Piece pieceOnTile = getBoard().getPiece(destination);
                 if (!pieceOnTile.getPieceAlliance().equals(this.getPieceAlliance())) {
-                    attackMoves.add(createMove(getBoard(), this, destination, pieceOnTile));
-
-                    // Changing Alliance On Tile
-                    getBoard().changeAllianceOnTile(destination, getPieceAlliance());
+                    this.legalMoves.add(createMove(getBoard(), this, destination, pieceOnTile));
                 }
             }
         }
-
-        return attackMoves;
     }
 
     private int getDirection() {
