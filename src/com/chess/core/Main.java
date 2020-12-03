@@ -11,14 +11,14 @@ public class Main {
         Board board = new Board();
         board.visualizeTileAlliance();
 
-/*        MainFrame mainFrame = new MainFrame();
+        MainFrame mainFrame = new MainFrame();
         mainFrame.init();
         mainFrame.drawBoard(board);
         mainFrame.drawPieces(board.getPieces(Alliance.BLACK));
         mainFrame.drawPieces(board.getPieces(Alliance.WHITE));
-        mainFrame.showCheckPopup();
-        mainFrame.showCheckMatePopup();*/
+        mainFrame.showLegalMoves(board.getPiece(62).getLegalMovesPositions());
 
         System.out.println(Arrays.toString(board.getPiece(48).getLegalMovesPositions()));
+
     }
 }
