@@ -7,9 +7,7 @@ import com.chess.core.pieces.*;
 import static com.chess.core.service.DataVisualizer.visualizeBoard;
 import static com.chess.core.service.DataVisualizer.arrayToString;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 
 import static com.chess.core.service.Converter.getRowNumber;
 import static com.chess.core.service.Converter.getColumnNumber;
@@ -17,16 +15,16 @@ import static com.chess.core.service.Converter.getColumnNumber;
 public class Board {
     private final Tile[] board;
 
-    private HashMap<Piece, HashSet<Move>> currentWhitePieces = new HashMap<>();
-    private HashMap<Piece, HashSet<Move>> currentBlackPieces = new HashMap<>();
-
-
     private King whiteKing;
     private King blackKing;
+    
+    private HashSet<Piece> currentWhitePieces = new HashSet<>();
+    private HashSet<Piece> currentBlackPieces = new HashSet<>();
 
     public Board() {
         this.board = createEmptyBoard();
         spawnPieces();
+        updateLegalMoves();
     }
 
     private Tile[] createEmptyBoard() {
@@ -45,32 +43,29 @@ public class Board {
 
     public void setPiece(int position, Piece piece) {
         this.board[position].setPiece(piece);
-
-        if (piece.getPieceAlliance().equals(Alliance.WHITE)) {
-            this.currentWhitePieces.put(piece, piece.calculateLegalMoves());
-        } else {
-            this.currentBlackPieces.put(piece, piece.calculateLegalMoves());
-        }
+        if (piece.getPieceAlliance().equals(Alliance.WHITE)) this.currentWhitePieces.add(piece);
+        else this.currentBlackPieces.add(piece);
     }
 
     public void removePiece(int position) {
         final Piece pieceToRemove = this.getPiece(position);
-        if (this.getPiece(position).getPieceAlliance().equals(Alliance.WHITE)) {
-            this.currentWhitePieces.remove(pieceToRemove);
-        } else {
-            this.currentBlackPieces.remove(pieceToRemove);
-        }
+        if (pieceToRemove.getPieceAlliance().equals(Alliance.WHITE)) this.currentWhitePieces.remove(pieceToRemove);
+        else this.currentBlackPieces.remove(pieceToRemove);
         board[position].clearTile();
     }
 
-    public HashMap<Piece, HashSet<Move>> getPieces(Alliance alliance) {
+    public HashSet<Piece> getPieces(Alliance alliance) {
         if (alliance.equals(Alliance.WHITE)) return this.currentWhitePieces;
-        return currentBlackPieces;
+        else return this.currentBlackPieces;
     }
 
     public King getKing(Alliance alliance) {
         if (alliance.equals(Alliance.WHITE)) return this.whiteKing;
         return this.blackKing;
+    }
+
+    public void updateLegalMoves() {
+        for (Piece piece : getPieces(Alliance.WHITE)) piece.calculateLegalMoves();
     }
 
     // Changes the alliance of tiles when calculating legal moves
@@ -84,10 +79,6 @@ public class Board {
 
         this.removePiece(move.getCurrentPosition());
         this.setPiece(move.getDestinationPosition(), pieceToMove);
-    }
-
-    public void updateLegalMoves() {
-        
     }
 
     public void spawnPieces() {
@@ -138,14 +129,15 @@ public class Board {
 
     public void clearBoard() {
         for (int i = 0; i < 64; i++) this.board[i].clearTile();
+        this.currentBlackPieces = new HashSet<>();
+        this.currentWhitePieces = new HashSet<>();
     }
 
     public void visualizeLegalMoves(final int piecePosition) {
         String[][] board = visualizeBoard(this);
         final Piece piece = this.getTile(piecePosition).getPiece();
-        HashSet<Move> legalMoves = piece.calculateLegalMoves();
 
-        for (Move move : legalMoves) {
+        for (Move move : piece.getLegalMoves()) {
             final int x = getColumnNumber(move.getDestinationPosition());
             final int y = getRowNumber(move.getDestinationPosition());
             board[y][x] = "*";

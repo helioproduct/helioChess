@@ -17,11 +17,10 @@ public class Bishop extends Piece {
     private final int[] DIRECTIONS = {-1, 1};
 
     @Override
-    public HashSet<Move> calculateLegalMoves() {
-        HashSet<Move> legalMoves = new HashSet<>(20);
+    public void calculateLegalMoves() {
+        //HashSet<Move> legalMoves = new HashSet<>(20);
 
         final int[] DIRECTIONS = {-1, 1};
-
 
         for (int direction : DIRECTIONS) {
             int x = getColumnNumber(getPiecePosition());
@@ -41,7 +40,7 @@ public class Bishop extends Piece {
                         move = createMove(getBoard(), this, destination, null);
 
                         getBoard().changeAllianceOnTile(destination, getPieceAlliance());
-                        legalMoves.add(move);
+                        this.legalMoves.add(move);
                     }
                     // Tile is occupied
                     else {
@@ -50,7 +49,7 @@ public class Bishop extends Piece {
                             move = createMove(getBoard(), this, destination, pieceOnTile);
 
                             getBoard().changeAllianceOnTile(destination, getPieceAlliance());
-                            legalMoves.add(move);
+                            this.legalMoves.add(move);
                         } break;
                     }
                 }
@@ -70,7 +69,7 @@ public class Bishop extends Piece {
                         move = createMove(getBoard(), this, destination, null);
 
                         getBoard().changeAllianceOnTile(destination, getPieceAlliance());
-                        legalMoves.add(move);
+                        this.legalMoves.add(move);
                     }
                     // Tile is occupied
                     else {
@@ -79,13 +78,11 @@ public class Bishop extends Piece {
                             move = createMove(getBoard(), this, destination, pieceOnTile);
 
                             getBoard().changeAllianceOnTile(destination, getPieceAlliance());
-                            legalMoves.add(move);
+                            this.legalMoves.add(move);
                         } break;
                     }
                 }
             }
         }
-
-        return legalMoves;
     }
 }

@@ -16,8 +16,7 @@ public class Rook extends Piece {
 
     private final int[] OFFSETS = {-8, 8, -1, 1};
 
-    public HashSet<Move> calculateLegalMoves() {
-        HashSet<Move> legalMoves = new HashSet<>();
+    public void calculateLegalMoves() {
         for (int offset : OFFSETS) {
             int position = this.getPiecePosition();
             int stepsCount = 1;
@@ -32,7 +31,7 @@ public class Rook extends Piece {
                     move = createMove(getBoard(), this, position, null);
 
                     getBoard().changeAllianceOnTile(position, getPieceAlliance());
-                    legalMoves.add(move);
+                    this.legalMoves.add(move);
                 }
                 // Tile is Occupied
                 else {
@@ -42,13 +41,12 @@ public class Rook extends Piece {
                         move = createMove(getBoard(), this, position, piece);
 
                         getBoard().changeAllianceOnTile(position, getPieceAlliance());
-                        legalMoves.add(move);
+                        this.legalMoves.add(move);
                     }
                     break;
                 }
             }
         }
-        return legalMoves;
     }
 
     public static boolean isValidPosition(int currentPosition, int candidatePosition) {

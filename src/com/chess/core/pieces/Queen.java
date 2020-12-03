@@ -25,9 +25,7 @@ public class Queen extends Piece {
     private final int[] DIRECTIONS = {-1, 1};
 
     @Override
-    public HashSet<Move> calculateLegalMoves() {
-        HashSet<Move> legalMoves = new HashSet<>();
-
+    public void calculateLegalMoves() {
         // Row and column moves
         for (int offset : ROOK_OFFSETS) {
             int position = this.getPiecePosition();
@@ -43,7 +41,7 @@ public class Queen extends Piece {
                     move = createMove(getBoard(), this, position, null);
 
                     getBoard().changeAllianceOnTile(position, getPieceAlliance());
-                    legalMoves.add(move);
+                    this.legalMoves.add(move);
                 }
                 // Tile is Occupied
                 else {
@@ -53,7 +51,7 @@ public class Queen extends Piece {
                         move = createMove(getBoard(), this, position, piece);
 
                         getBoard().changeAllianceOnTile(position, getPieceAlliance());
-                        legalMoves.add(move);
+                        this.legalMoves.add(move);
                     }
                     break;
                 }
@@ -77,7 +75,7 @@ public class Queen extends Piece {
                         move = createMove(getBoard(), this, destination, null);
 
                         getBoard().changeAllianceOnTile(destination, getPieceAlliance());
-                        legalMoves.add(move);
+                        this.legalMoves.add(move);
                     }
                     // Tile is Occupied
                     else {
@@ -86,7 +84,7 @@ public class Queen extends Piece {
                             move = createMove(getBoard(), this, destination, pieceOnTile);
 
                             getBoard().changeAllianceOnTile(destination, getPieceAlliance());
-                            legalMoves.add(move);
+                            this.legalMoves.add(move);
                         } break;
                     }
                 }
@@ -104,7 +102,7 @@ public class Queen extends Piece {
                         move = createMove(getBoard(), this, destination, null);
 
                         getBoard().changeAllianceOnTile(destination, getPieceAlliance());
-                        legalMoves.add(move);
+                        this.legalMoves.add(move);
                     }
                     // Tile is occupied
                     else {
@@ -113,13 +111,11 @@ public class Queen extends Piece {
                             move = createMove(getBoard(), this, destination, pieceOnTile);
 
                             getBoard().changeAllianceOnTile(destination, getPieceAlliance());
-                            legalMoves.add(move);
+                            this.legalMoves.add(move);
                         } break;
                     }
                 }
             }
         }
-
-        return legalMoves;
     }
 }
