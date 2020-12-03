@@ -22,7 +22,7 @@ public class King extends Piece {
             if (isValidPosition(destination) && isTheSameSquare(destination)) {
                 if (!getBoard().getTile(destination).isTileOccupied()) {
                     this.legalMoves.add(createMove(getBoard(), this, destination, null));
-                } else {
+                } else if (!getBoard().getTile(destination).getPiece().getPieceAlliance().equals(this.getPieceAlliance())){
                     Piece pieceOnTile = getBoard().getPiece(destination);
                     this.legalMoves.add(createMove(getBoard(), this, destination, pieceOnTile));
                 }

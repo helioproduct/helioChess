@@ -135,15 +135,18 @@ public class Board {
 
     public void visualizeLegalMoves(final int piecePosition) {
         String[][] board = visualizeBoard(this);
-        final Piece piece = this.getTile(piecePosition).getPiece();
+        try {
+            final Piece piece = this.getTile(piecePosition).getPiece();
+            for (Move move : piece.getLegalMoves()) {
+                final int x = getColumnNumber(move.getDestinationPosition());
+                final int y = getRowNumber(move.getDestinationPosition());
+                board[y][x] = "*";
+            }
+            System.out.println(arrayToString(board));
 
-        for (Move move : piece.getLegalMoves()) {
-            final int x = getColumnNumber(move.getDestinationPosition());
-            final int y = getRowNumber(move.getDestinationPosition());
-            board[y][x] = "*";
+        } catch (NullPointerException nullPointerException) {
+            // Piece is null there no legal moves for it
         }
-
-        System.out.println(arrayToString(board));
     }
 
     public void visualizeTileAlliance() {

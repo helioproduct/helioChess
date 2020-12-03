@@ -54,13 +54,14 @@ public class Pawn extends Piece {
         int destination = getPiecePosition() + attackOffsetLeft;
 
         if (isValidPosition(destination) && isValidColumn(destination)) {
+
+            // Changing Alliance On Tile
+            getBoard().changeAllianceOnTile(destination, getPieceAlliance());
+
             if (getBoard().getTile(destination).isTileOccupied()) {
                 Piece pieceOnTile = getBoard().getPiece(destination);
                 if (!pieceOnTile.getPieceAlliance().equals(this.getPieceAlliance())) {
                     this.legalMoves.add(createMove(getBoard(), this, destination, pieceOnTile));
-
-                    // Changing Alliance On Tile
-                    getBoard().changeAllianceOnTile(destination, getPieceAlliance());
                 }
             }
         }
@@ -68,13 +69,14 @@ public class Pawn extends Piece {
         // Right-Attack move
         destination = getPiecePosition() + attackOffsetRight;
         if (isValidPosition(destination) && isValidColumn(destination)) {
+
+            // Changing Alliance On Tile
+            getBoard().changeAllianceOnTile(destination, getPieceAlliance());
+
             if (getBoard().getTile(destination).isTileOccupied()) {
                 Piece pieceOnTile = getBoard().getPiece(destination);
                 if (!pieceOnTile.getPieceAlliance().equals(this.getPieceAlliance())) {
                     this.legalMoves.add(createMove(getBoard(), this, destination, pieceOnTile));
-
-                    // Changing Alliance On Tile
-                    getBoard().changeAllianceOnTile(destination, getPieceAlliance());
                 }
             }
         }
