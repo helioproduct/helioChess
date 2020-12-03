@@ -2,16 +2,10 @@ package com.chess.core.pieces;
 
 import com.chess.core.board.Board;
 import com.chess.core.game.Alliance;
-import com.chess.core.move.Move;
 import static com.chess.core.move.Move.createMove;
 import static com.chess.core.service.Converter.isValidPosition;
 import static com.chess.core.service.Converter.getRowNumber;
 import static com.chess.core.service.Converter.getColumnNumber;
-
-
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class King extends Piece {
     public King(Board board, int piecePosition, Alliance alliance) {
@@ -21,23 +15,19 @@ public class King extends Piece {
     private final int[] OFFSETS = {-9, -8, -7, -1, 1, 7, 8, 9};
 
     @Override
-    public List<Move> calculateLegalMoves() {
-        List<Move> legalMoves = new ArrayList<>();
-
+    public void calculateLegalMoves() {
         for (int offset : OFFSETS) {
             int destination = getPiecePosition() + offset;
 
             if (isValidPosition(destination) && isTheSameSquare(destination)) {
                 if (!getBoard().getTile(destination).isTileOccupied()) {
-                    legalMoves.add(createMove(getBoard(), this, destination, null));
+                    this.legalMoves.add(createMove(getBoard(), this, destination, null));
                 } else {
                     Piece pieceOnTile = getBoard().getPiece(destination);
-                    legalMoves.add(createMove(getBoard(), this, destination, pieceOnTile));
+                    this.legalMoves.add(createMove(getBoard(), this, destination, pieceOnTile));
                 }
             }
         }
-
-        return legalMoves;
     }
 
     private boolean isTheSameSquare(int destination) {

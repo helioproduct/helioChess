@@ -6,6 +6,7 @@ import com.chess.core.game.Game;
 import com.chess.core.pieces.Piece;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public interface GraphicConnector {
 
@@ -13,7 +14,7 @@ public interface GraphicConnector {
     void drawTile(Tile tile);   // tile.getColor();
     void drawBoard(Board board);    // Я так понимаю здесь ты будешь вызывать drawTile();
     void drawPiece(Piece piece);   // Use piece.getColor();
-    void drawPieces(ArrayList<Piece> pieceList);
+    void drawPieces(HashSet<Piece> pieceList);
 
     void movePiece(int currentPosition, int destination);
     void showLegalMoves(int[] legalMovesPositions);
