@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Board board = new Board();
+        for (int i = 0; i < 64; i++) board.visualizeLegalMoves(i);
 
         MainFrame mainFrame = new MainFrame();
         mainFrame.init();
@@ -20,5 +21,9 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         int position = scan.nextInt();
         mainFrame.showLegalMoves(board.getPiece(position).getLegalMovesPositions());
+        while (true) {
+            position = scan.nextInt();
+            mainFrame.showLegalMoves(board.getPiece(position).getLegalMovesPositions());
+        }
     }
 }

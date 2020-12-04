@@ -82,8 +82,10 @@ public class Board {
     }
 
     public void spawnPieces() {
+        setPiece(59, new Queen(this, 59, Alliance.WHITE));
+
         // White
-        setPiece(0, new Rook(this, 0, Alliance.BLACK));
+/*        setPiece(0, new Rook(this, 0, Alliance.BLACK));
         setPiece(1, new Knight(this, 1, Alliance.BLACK));
         setPiece(2, new Bishop(this, 2, Alliance.BLACK));
         setPiece(3, new Queen(this, 3, Alliance.BLACK));
@@ -116,7 +118,7 @@ public class Board {
         setPiece(52, new Pawn(this, 52, Alliance.WHITE));
         setPiece(53, new Pawn(this, 53, Alliance.WHITE));
         setPiece(54, new Pawn(this, 54, Alliance.WHITE));
-        setPiece(55, new Pawn(this ,55, Alliance.WHITE));
+        setPiece(55, new Pawn(this ,55, Alliance.WHITE));*/
 
         // Saving kings
         this.blackKing = (King) this.getPiece(4);
