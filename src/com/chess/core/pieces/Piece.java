@@ -6,7 +6,6 @@ import com.chess.core.move.Move;
 
 import java.awt.*;
 import java.util.HashSet;
-import java.util.Iterator;
 
 public abstract class Piece {
 
@@ -59,10 +58,11 @@ public abstract class Piece {
     }
 
     private int calculateHashCode() {
-        int result = 1;
-        result = 31 * result + getPieceAlliance().hashCode();
-        result = 31 * result + getPieceName().hashCode();
-        return result;
+        int hash = 1;
+        if (this.getPieceAlliance().equals(Alliance.WHITE)) hash *= 11;
+        else hash *= 31;
+        hash += this.pieceName.hashCode();
+        return hash;
     }
 
     public int[] getLegalMovesPositions() {
@@ -76,14 +76,14 @@ public abstract class Piece {
     }
 
     @Override
-    public int hashCode() {
-        return this.cachedHashCode;
-    }
-
-    @Override
     public String toString() {
         if (getPieceAlliance().equals(Alliance.WHITE)) return String.valueOf(this.getPieceName().toCharArray()[0]);
         return String.valueOf(this.getPieceName().toCharArray()[0]).toLowerCase();
+    }
+
+    @Override
+    public int hashCode() {
+        return this.cachedHashCode;
     }
 
     // GUI

@@ -1,5 +1,6 @@
 package com.chess.core.game;
 
+import com.chess.core.GUI.MainFrame;
 import com.chess.core.board.Board;
 import com.chess.core.game.player.BlackPlayer;
 import com.chess.core.game.player.Player;
@@ -26,6 +27,13 @@ public class Game {
 
     public void run() {
         // while is not check mate
+
+        MainFrame mainFrame = new MainFrame();
+        mainFrame.drawBoard(this.getBoard());
+        mainFrame.drawPieces(this.getBoard().getPieces(Alliance.BLACK));
+        mainFrame.drawPieces(this.getBoard().getPieces(Alliance.WHITE));
+        mainFrame.init();
+
         while (true) {
             this.getPlayer(allianceToMove).makeMove();
         }

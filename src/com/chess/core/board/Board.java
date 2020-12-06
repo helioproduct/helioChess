@@ -24,7 +24,7 @@ public class Board {
     public Board() {
         this.board = createEmptyBoard();
         spawnPieces();
-        updateLegalMoves();
+        updateLegalMoves(Alliance.WHITE);
     }
 
     private Tile[] createEmptyBoard() {
@@ -64,8 +64,8 @@ public class Board {
         return this.blackKing;
     }
 
-    public void updateLegalMoves() {
-        for (Piece piece : getPieces(Alliance.WHITE)) piece.calculateLegalMoves();
+    public void updateLegalMoves(Alliance alliance) {
+        for (Piece piece : getPieces(alliance)) piece.calculateLegalMoves();
     }
 
     // Changes the alliance of tiles when calculating legal moves
@@ -82,10 +82,8 @@ public class Board {
     }
 
     public void spawnPieces() {
-        setPiece(59, new Queen(this, 59, Alliance.WHITE));
-
         // White
-/*        setPiece(0, new Rook(this, 0, Alliance.BLACK));
+        setPiece(0, new Rook(this, 0, Alliance.BLACK));
         setPiece(1, new Knight(this, 1, Alliance.BLACK));
         setPiece(2, new Bishop(this, 2, Alliance.BLACK));
         setPiece(3, new Queen(this, 3, Alliance.BLACK));
@@ -93,7 +91,9 @@ public class Board {
         setPiece(5, new Bishop(this, 5, Alliance.BLACK));
         setPiece(6, new Knight(this, 6, Alliance.BLACK));
         setPiece(7, new Rook(this, 7, Alliance.BLACK));
-        setPiece(8, new Pawn(this, 8, Alliance.BLACK));
+
+        // HERE
+        setPiece(24, new Pawn(this, 24, Alliance.BLACK));
         setPiece(9, new Pawn(this, 9, Alliance.BLACK));
         setPiece(10, new Pawn(this, 10, Alliance.BLACK));
         setPiece(11, new Pawn(this, 11, Alliance.BLACK));
@@ -112,13 +112,17 @@ public class Board {
         setPiece(62, new Knight(this, 62, Alliance.WHITE));
         setPiece(63, new Rook(this, 63, Alliance.WHITE));
         setPiece(48, new Pawn(this, 48, Alliance.WHITE));
-        setPiece(49, new Pawn(this, 49, Alliance.WHITE));
+
+        // here
+        setPiece(33, new Pawn(this, 33, Alliance.WHITE));
+
+
         setPiece(50, new Pawn(this, 50, Alliance.WHITE));
         setPiece(51, new Pawn(this, 51, Alliance.WHITE));
         setPiece(52, new Pawn(this, 52, Alliance.WHITE));
         setPiece(53, new Pawn(this, 53, Alliance.WHITE));
         setPiece(54, new Pawn(this, 54, Alliance.WHITE));
-        setPiece(55, new Pawn(this ,55, Alliance.WHITE));*/
+        setPiece(55, new Pawn(this ,55, Alliance.WHITE));
 
         // Saving kings
         this.blackKing = (King) this.getPiece(4);
