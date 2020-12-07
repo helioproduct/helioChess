@@ -13,8 +13,19 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        Game game = new Game();
+        Board board = new Board();
 
+        MainFrame mainFrame = new MainFrame();
+        mainFrame.init();
+        mainFrame.drawBoard(board);
+        mainFrame.drawPieces(board.getPieces(Alliance.BLACK));
+        mainFrame.drawPieces(board.getPieces(Alliance.WHITE));
 
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            int position = scanner.nextInt();
+            if (position == -1) break;
+            mainFrame.showLegalMoves(board.getPiece(position).getLegalMovesPositions());
+        }
     }
 }

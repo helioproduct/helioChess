@@ -27,13 +27,6 @@ public class Game {
 
     public void run() {
         // while is not check mate
-
-        MainFrame mainFrame = new MainFrame();
-        mainFrame.drawBoard(this.getBoard());
-        mainFrame.drawPieces(this.getBoard().getPieces(Alliance.BLACK));
-        mainFrame.drawPieces(this.getBoard().getPieces(Alliance.WHITE));
-        mainFrame.init();
-
         while (true) {
             this.getPlayer(allianceToMove).makeMove();
         }
