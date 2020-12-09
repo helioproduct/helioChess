@@ -17,5 +17,6 @@ public class WhitePlayer extends Player {
     @Override
     public void nextMove() {
         this.game.allianceToMove = Alliance.BLACK;
+        this.game.getBoard().updateLegalMoves(Alliance.BLACK);
     }
 }

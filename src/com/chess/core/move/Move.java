@@ -16,10 +16,8 @@ public abstract class Move {
     protected Move(Board board, Piece pieceToMove, int destinationPosition) {
         this.board = board;
         this.movedPiece = pieceToMove;
-
         this.currentPosition = pieceToMove.getPiecePosition();
         this.destinationPosition = destinationPosition;
-
         this.hashCode = calculateHashCode();
     }
 
@@ -40,7 +38,11 @@ public abstract class Move {
     }
 
     private int calculateHashCode() {
-        return 31 * destinationPosition + 31 * currentPosition + 31 * movedPiece.hashCode();
+        int hash = 1;
+        hash *= currentPosition;
+        hash *= destinationPosition;
+        hash += movedPiece.hashCode();
+        return hash;
     }
 
     @Override
@@ -48,7 +50,8 @@ public abstract class Move {
         return this.hashCode;
     }
 
-    public boolean equals(Move move) {
-        return this.hashCode() == move.hashCode();
+    @Override
+    public boolean equals(Object o) {
+        return this.hashCode() == o.hashCode();
     }
 }

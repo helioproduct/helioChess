@@ -22,12 +22,30 @@ public abstract class Player {
     }
 
     public void makeMove() {
+        Scanner scanner = new Scanner(System.in);
 
-        // something happens
+        int currentPosition = scanner.nextInt();
+        int destinationPosition = scanner.nextInt();
 
-        // Checking for check and or check and mate or something else
+        Piece movedPiece = getBoard().getPiece(currentPosition);
+        Piece attackedPiece = getBoard().getPiece(destinationPosition);
+
+        if (movedPiece.getPieceAlliance().equals(this.getPlayerAlliance())) {
+            Move move = Move.createMove(getBoard(), movedPiece, destinationPosition, attackedPiece);
+            if (isMoveLegal(move)) this.getBoard().changePiecePosition(move);
+            else {
+                System.out.println("move is not legal");
+            }
+        } else {
+            System.out.println("go fuck yourself");
+        }
 
         this.nextMove();
+        System.out.println(getBoard());
+    }
+
+    private boolean isMoveLegal(Move move) {
+        return move.getMovedPiece().getLegalMoves().contains(move);
     }
 
     public void updateLegalMoves() {

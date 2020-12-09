@@ -1,5 +1,6 @@
 package com.chess.core.game;
 
+import com.chess.core.GUI.MainFrame;
 import com.chess.core.board.Board;
 import com.chess.core.game.player.BlackPlayer;
 import com.chess.core.game.player.Player;
