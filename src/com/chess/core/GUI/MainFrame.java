@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 
 public class MainFrame implements GraphicConnector {
@@ -106,6 +107,11 @@ public class MainFrame implements GraphicConnector {
 
     @Override
     public void showLegalMoves(int[] legalMovesPositions) {
+        for (int i = 0; i < board.getComponentCount(); i++) {
+            GTile tile = (GTile) board.getComponent(i);
+            tile.makeOrdinary();
+        }
+        System.out.println(Arrays.toString(legalMovesPositions));
         for (int i:legalMovesPositions) {
             GTile tile = (GTile) board.getComponent(i);
             tile.makeTargeted();
