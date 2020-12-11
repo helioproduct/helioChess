@@ -14,18 +14,21 @@ public class Main {
     public static void main(String[] args) {
 
         Board board = new Board();
+        //board.visualizeTileAlliance();
 
         MainFrame mainFrame = new MainFrame();
         mainFrame.init();
         mainFrame.drawBoard(board);
         mainFrame.drawPieces(board.getPieces(Alliance.BLACK));
         mainFrame.drawPieces(board.getPieces(Alliance.WHITE));
-
+        
+        
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            int position = scanner.nextInt();
-            if (position == -1) break;
-            mainFrame.showLegalMoves(board.getPiece(position).getLegalMovesPositions());
+            int number = scanner.nextInt();
+            if (number == -1) break;
+            mainFrame.showLegalMoves(board.getPiece(number).getLegalMovesPositions());
         }
+
     }
 }

@@ -111,7 +111,7 @@ public class MainFrame implements GraphicConnector {
             GTile tile = (GTile) board.getComponent(i);
             tile.makeOrdinary();
         }
-        System.out.println(Arrays.toString(legalMovesPositions));
+        //System.out.println(Arrays.toString(legalMovesPositions));
         for (int i:legalMovesPositions) {
             GTile tile = (GTile) board.getComponent(i);
             tile.makeTargeted();

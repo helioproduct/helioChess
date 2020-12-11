@@ -82,7 +82,7 @@ public class Board {
     }
 
     public void spawnPieces() {
-        // WHITE (2nd Row)
+        // BLACK (2nd Row)
         setPiece(0, new Rook(this, 0, Alliance.BLACK));
         setPiece(1, new Knight(this, 1, Alliance.BLACK));
         setPiece(2, new Bishop(this, 2, Alliance.BLACK));
@@ -91,7 +91,8 @@ public class Board {
         setPiece(5, new Bishop(this, 5, Alliance.BLACK));
         setPiece(6, new Knight(this, 6, Alliance.BLACK));
         setPiece(7, new Rook(this, 7, Alliance.BLACK));
-        // WHITE PAWNS (1st Row)
+
+        // BlACK PAWNS (1st Row)
         setPiece(8, new Pawn(this, 8, Alliance.BLACK));
         setPiece(9, new Pawn(this, 9, Alliance.BLACK));
         setPiece(10, new Pawn(this, 10, Alliance.BLACK));
@@ -101,7 +102,7 @@ public class Board {
         setPiece(14, new Pawn(this, 14, Alliance.BLACK));
         setPiece(15, new Pawn(this, 15, Alliance.BLACK));
 
-        // BLACK (1st Row)
+        // WHITE (1st Row)
         setPiece(56, new Rook(this, 56, Alliance.WHITE));
         setPiece(57, new Knight(this, 57, Alliance.WHITE));
         setPiece(58, new Bishop(this, 58, Alliance.WHITE));
@@ -112,7 +113,7 @@ public class Board {
         setPiece(63, new Rook(this, 63, Alliance.WHITE));
         setPiece(48, new Pawn(this, 48, Alliance.WHITE));
 
-        // BLACK PAWNS (2nd Row)
+        // WHITE PAWNS (2nd Row)
         setPiece(49, new Pawn(this, 49, Alliance.WHITE));
         setPiece(50, new Pawn(this, 50, Alliance.WHITE));
         setPiece(51, new Pawn(this, 51, Alliance.WHITE));
