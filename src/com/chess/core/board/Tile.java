@@ -12,13 +12,19 @@ public class Tile {
     private Piece pieceOnTile;
 
     private Alliance allianceOnTile;
-    private final Color color;
+    private final Color color, legalColor;
 
     public Tile(int coordinate, Piece piece) {
         this.coordinate = coordinate;
 
-        if ((Converter.getColumnNumber(coordinate) + Converter.getRowNumber(coordinate)) % 2 == 0) this.color = ColorPalette.TILE_LIGHT;
-        else this.color = ColorPalette.TILE_DARK;
+        if ((Converter.getColumnNumber(coordinate) + Converter.getRowNumber(coordinate)) % 2 == 0) {
+            this.color = ColorPalette.TILE_LIGHT;
+            this.legalColor = ColorPalette.TILE_LEGAL_LIGHT;
+        }
+        else {
+            this.color = ColorPalette.TILE_DARK;
+            this.legalColor = ColorPalette.TILE_LEGAL_DARK;
+        }
 
         setPiece(piece);
         this.allianceOnTile = null;
@@ -68,5 +74,9 @@ public class Tile {
 
     public Color getColor() {
         return this.color;
+    }
+
+    public Color getLegalColor() {
+        return this.legalColor;
     }
 }

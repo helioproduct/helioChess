@@ -14,14 +14,15 @@ import java.net.URISyntaxException;
 public class GTile extends JComponent {
 
     private final int x, y;
-    private Color color;
+    private Color color, legalColor;
     private Image pieceImage;
     private boolean targeted;
 
-    public GTile(int position, Color color) {
+    public GTile(int position, Color color, Color legalColor) {
         this.x = Converter.getColumnNumber(position);
         this.y = Converter.getRowNumber(position);
         this.color = color;
+        this.legalColor = legalColor;
         this.setSize(50, 50);
         this.addMouseListener(new MouseListener() {
             @Override
@@ -55,12 +56,11 @@ public class GTile extends JComponent {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(color);
+        if (targeted) {
+            g.setColor(legalColor);
+        }
         g.fillRect(0, 0, 50, 50);
         g.drawImage(pieceImage, 0, 0, 50, 50, this);
-        if (targeted) {
-            g.setColor(Color.GREEN);
-            g.fillOval(15, 15, 20, 20);
-        }
     }
 
     public void drawPiece(Image pieceImage) {
