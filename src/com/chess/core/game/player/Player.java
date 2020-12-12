@@ -7,6 +7,8 @@ import com.chess.core.move.Move;
 import com.chess.core.pieces.King;
 import com.chess.core.pieces.Piece;
 
+import static com.chess.core.game.Game.isMoveLegal;
+
 import java.util.*;
 
 public abstract class Player {
@@ -23,29 +25,24 @@ public abstract class Player {
 
     public void makeMove() {
         Scanner scanner = new Scanner(System.in);
+        while (true) {
+            int currentPosition = scanner.nextInt();
+            int[] moves = this.getBoard().getPiece(currentPosition).getLegalMovesPositions();
+            System.out.println(Arrays.toString(moves));
+            this.game.showLegalMoves(currentPosition);
 
-        int currentPosition = scanner.nextInt();
-        int destinationPosition = scanner.nextInt();
+            int destinationPosition = scanner.nextInt();
 
-        Piece movedPiece = getBoard().getPiece(currentPosition);
-        Piece attackedPiece = getBoard().getPiece(destinationPosition);
+            Piece pieceToMove = getBoard().getPiece(currentPosition);
+            Piece attackedPiece = getBoard().getPiece(destinationPosition);
 
-        if (movedPiece.getPieceAlliance().equals(this.getPlayerAlliance())) {
-            Move move = Move.createMove(getBoard(), movedPiece, destinationPosition, attackedPiece);
-            if (isMoveLegal(move)) this.getBoard().changePiecePosition(move);
-            else {
-                System.out.println("move is not legal");
+            Move move = Move.createMove(getBoard(), pieceToMove, destinationPosition, attackedPiece);
+            if (isMoveLegal(move)) {
+                this.game.movePiece(move);
+                nextMove();
+                break;
             }
-        } else {
-            System.out.println("go fuck yourself");
         }
-
-        this.nextMove();
-        System.out.println(getBoard());
-    }
-
-    private boolean isMoveLegal(Move move) {
-        return move.getMovedPiece().getLegalMoves().contains(move);
     }
 
     public void updateLegalMoves() {

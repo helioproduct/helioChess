@@ -18,6 +18,7 @@ public abstract class Piece {
     // LegalMoves
     protected HashSet<Move> legalMoves = new HashSet<>(32);
 
+    private int numberOfMoves = 0;
     private final int cachedHashCode;
 
     // GUI
@@ -39,6 +40,14 @@ public abstract class Piece {
 
     public void changePiecePosition(final Move move) {
         this.position = move.getDestinationPosition();
+    }
+
+    public int getNumberOfMoves() {
+        return this.numberOfMoves;
+    }
+
+    public void increaseNumberOfMoves() {
+        this.numberOfMoves += 1;
     }
 
     public Board getBoard() {

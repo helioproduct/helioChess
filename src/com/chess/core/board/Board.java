@@ -27,6 +27,11 @@ public class Board {
         updateLegalMoves(Alliance.WHITE);
     }
 
+    public Board(Tile[] boardConfiguration) {
+        this.board = boardConfiguration;
+        updateLegalMoves(Alliance.WHITE);
+    }
+
     private Tile[] createEmptyBoard() {
         Tile[] tiles = new Tile[64];
         for (int i = 0; i < 64; i++) tiles[i] = new Tile(i, null);
@@ -76,14 +81,19 @@ public class Board {
     public void changePiecePosition(final Move move) {
         final Piece pieceToMove = move.getMovedPiece();
         pieceToMove.changePiecePosition(move);
+        pieceToMove.increaseNumberOfMoves();
 
         this.removePiece(move.getCurrentPosition());
         this.setPiece(move.getDestinationPosition(), pieceToMove);
     }
 
     public void spawnPieces() {
+
+        setPiece(45, new Knight(this, 45, Alliance.WHITE));
+
+
         // BLACK (2nd Row)
-        setPiece(0, new Rook(this, 0, Alliance.BLACK));
+      /*  setPiece(0, new Rook(this, 0, Alliance.BLACK));
         setPiece(1, new Knight(this, 1, Alliance.BLACK));
         setPiece(2, new Bishop(this, 2, Alliance.BLACK));
         setPiece(3, new Queen(this, 3, Alliance.BLACK));
@@ -124,7 +134,7 @@ public class Board {
 
         // Saving kings
         this.blackKing = (King) this.getPiece(4);
-        this.whiteKing = (King) this.getPiece(60);
+        this.whiteKing = (King) this.getPiece(60);*/
     }
 
     public Tile[] getBoardConfiguration() {

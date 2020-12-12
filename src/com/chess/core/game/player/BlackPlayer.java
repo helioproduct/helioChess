@@ -2,7 +2,6 @@ package com.chess.core.game.player;
 
 import com.chess.core.game.Alliance;
 import com.chess.core.game.Game;
-import com.chess.core.move.Move;
 
 public class BlackPlayer extends Player {
 
@@ -18,5 +17,6 @@ public class BlackPlayer extends Player {
     @Override
     public void nextMove() {
         this.game.allianceToMove = Alliance.WHITE;
+        this.game.getBoard().updateLegalMoves(Alliance.WHITE);
     }
 }
