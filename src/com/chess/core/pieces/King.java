@@ -2,6 +2,10 @@ package com.chess.core.pieces;
 
 import com.chess.core.board.Board;
 import com.chess.core.game.Alliance;
+import com.chess.core.move.Move;
+
+import java.util.HashSet;
+
 import static com.chess.core.move.Move.createMove;
 import static com.chess.core.service.Converter.isValidPosition;
 import static com.chess.core.service.Converter.getRowNumber;
@@ -16,18 +20,19 @@ public class King extends Piece {
 
     @Override
     public void calculateLegalMoves() {
+        HashSet<Move> legalMovesCache = new HashSet<>(4);
         for (int offset : OFFSETS) {
             int destination = getPiecePosition() + offset;
 
             if (isValidPosition(destination) && isTheSameSquare(destination)) {
                 if (!getBoard().getTile(destination).isTileOccupied()) {
-                    this.legalMoves.add(createMove(getBoard(), this, destination, null));
+                    legalMovesCache.add(createMove(getBoard(), this, destination, null));
                 } else if (!getBoard().getTile(destination).getPiece().getPieceAlliance().equals(this.getPieceAlliance())){
                     Piece pieceOnTile = getBoard().getPiece(destination);
-                    this.legalMoves.add(createMove(getBoard(), this, destination, pieceOnTile));
+                    legalMovesCache.add(createMove(getBoard(), this, destination, pieceOnTile));
                 }
             }
-        }
+        } this.legalMoves = legalMovesCache;
     }
 
     private boolean isTheSameSquare(int destination) {

@@ -27,26 +27,26 @@ public abstract class Player {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             int currentPosition = scanner.nextInt();
-            int[] moves = this.getBoard().getPiece(currentPosition).getLegalMovesPositions();
-            System.out.println(Arrays.toString(moves));
-            this.game.showLegalMoves(currentPosition);
 
-            int destinationPosition = scanner.nextInt();
+            Piece pieceToMove = this.getBoard().getPiece(currentPosition);
+            if (pieceToMove.getPieceAlliance().equals(this.game.allianceToMove)) {
+                int[] moves = this.getBoard().getPiece(currentPosition).getLegalMovesPositions();
+                System.out.println(Arrays.toString(moves));
+                this.game.showLegalMoves(currentPosition);
+                int destinationPosition = scanner.nextInt();
 
-            Piece pieceToMove = getBoard().getPiece(currentPosition);
-            Piece attackedPiece = getBoard().getPiece(destinationPosition);
+                Piece attackedPiece = getBoard().getPiece(destinationPosition);
+                Move move = Move.createMove(getBoard(), pieceToMove, destinationPosition, attackedPiece);
+                if (isMoveLegal(move)) {
+                    this.game.movePiece(move);
+                    nextMove();
+                    break;
+                }
 
-            Move move = Move.createMove(getBoard(), pieceToMove, destinationPosition, attackedPiece);
-            if (isMoveLegal(move)) {
-                this.game.movePiece(move);
-                nextMove();
-                break;
+            } else {
+                System.out.println("не трожь чужое");
             }
         }
-    }
-
-    public void updateLegalMoves() {
-        List<Move> legalMoves = new ArrayList<>();
     }
 
     public abstract void nextMove();

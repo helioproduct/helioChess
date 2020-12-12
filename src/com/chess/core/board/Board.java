@@ -70,7 +70,10 @@ public class Board {
     }
 
     public void updateLegalMoves(Alliance alliance) {
+        long sTime = System.currentTimeMillis();
         for (Piece piece : getPieces(alliance)) piece.calculateLegalMoves();
+        long totalTime = System.currentTimeMillis() - sTime;
+        System.out.println(totalTime + "\n");
     }
 
     // Changes the alliance of tiles when calculating legal moves
@@ -89,11 +92,11 @@ public class Board {
 
     public void spawnPieces() {
 
-        setPiece(45, new Knight(this, 45, Alliance.WHITE));
+        //setPiece(45, new Knight(this, 45, Alliance.WHITE));
 
 
         // BLACK (2nd Row)
-      /*  setPiece(0, new Rook(this, 0, Alliance.BLACK));
+        setPiece(0, new Rook(this, 0, Alliance.BLACK));
         setPiece(1, new Knight(this, 1, Alliance.BLACK));
         setPiece(2, new Bishop(this, 2, Alliance.BLACK));
         setPiece(3, new Queen(this, 3, Alliance.BLACK));
@@ -134,7 +137,7 @@ public class Board {
 
         // Saving kings
         this.blackKing = (King) this.getPiece(4);
-        this.whiteKing = (King) this.getPiece(60);*/
+        this.whiteKing = (King) this.getPiece(60);
     }
 
     public Tile[] getBoardConfiguration() {

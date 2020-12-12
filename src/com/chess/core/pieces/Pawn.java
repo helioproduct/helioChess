@@ -2,6 +2,10 @@ package com.chess.core.pieces;
 
 import com.chess.core.board.Board;
 import com.chess.core.game.Alliance;
+import com.chess.core.move.Move;
+
+import java.util.HashSet;
+
 import static com.chess.core.service.Converter.getColumnNumber;
 import static com.chess.core.service.Converter.getRowNumber;
 import static com.chess.core.service.Converter.isValidPosition;
@@ -15,6 +19,8 @@ public class Pawn extends Piece {
     @Override
     public void calculateLegalMoves() {
 
+        HashSet<Move> legalMovesCache = new HashSet<>(6);
+
         int classicOffset = 8 * getDirection();
         int jumpOffset = 16 * getDirection();
 
@@ -22,7 +28,7 @@ public class Pawn extends Piece {
         int destination = getPiecePosition() + classicOffset;
         if (isValidPosition(destination)) {
             if (!this.getBoard().getTile(destination).isTileOccupied()) {
-                this.legalMoves.add(createMove(getBoard(), this, destination, null));
+                legalMovesCache.add(createMove(getBoard(), this, destination, null));
             }
         }
 
@@ -33,7 +39,7 @@ public class Pawn extends Piece {
                 if (!getBoard().getTile(getPiecePosition() + classicOffset).isTileOccupied()
                         && isValidPosition(destination)) {
                     if (!getBoard().getTile(destination).isTileOccupied()) {
-                        this.legalMoves.add(createMove(getBoard(), this, destination, null));
+                        legalMovesCache.add(createMove(getBoard(), this, destination, null));
                     }
                 }
             }
@@ -42,11 +48,12 @@ public class Pawn extends Piece {
         // TODO : Превращение пешки
         // TODO : En-Passant move
 
-        calculateAttackMoves();
+        legalMovesCache.addAll(calculateAttackMoves());
+        this.legalMoves = legalMovesCache;
     }
 
-    private void calculateAttackMoves() {
-
+    private HashSet<Move> calculateAttackMoves() {
+        HashSet<Move> attackMoveCache = new HashSet<>(2);
         int attackOffsetLeft = 9 * getDirection();
         int attackOffsetRight = 7 * getDirection();
 
@@ -61,7 +68,7 @@ public class Pawn extends Piece {
             if (getBoard().getTile(destination).isTileOccupied()) {
                 Piece pieceOnTile = getBoard().getPiece(destination);
                 if (!pieceOnTile.getPieceAlliance().equals(this.getPieceAlliance())) {
-                    this.legalMoves.add(createMove(getBoard(), this, destination, pieceOnTile));
+                    attackMoveCache.add(createMove(getBoard(), this, destination, pieceOnTile));
                 }
             }
         }
@@ -76,10 +83,11 @@ public class Pawn extends Piece {
             if (getBoard().getTile(destination).isTileOccupied()) {
                 Piece pieceOnTile = getBoard().getPiece(destination);
                 if (!pieceOnTile.getPieceAlliance().equals(this.getPieceAlliance())) {
-                    this.legalMoves.add(createMove(getBoard(), this, destination, pieceOnTile));
+                    attackMoveCache.add(createMove(getBoard(), this, destination, pieceOnTile));
                 }
             }
         }
+        return attackMoveCache;
     }
 
     private int getDirection() {
