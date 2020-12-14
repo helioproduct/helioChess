@@ -4,6 +4,8 @@ import com.chess.core.board.Board;
 import com.chess.core.game.Alliance;
 import com.chess.core.move.Move;
 
+import java.util.HashSet;
+
 import static com.chess.core.service.Converter.getColumnNumber;
 import static com.chess.core.service.Converter.isValidPosition;
 import static com.chess.core.move.Move.createMove;
@@ -17,6 +19,7 @@ public class Knight extends Piece {
 
     @Override
     public void calculateLegalMoves() {
+        HashSet<Move> legalMovesCache = new HashSet<>(10);
         for (int offset : OFFSETS) {
             int destination = getPiecePosition() + offset;
             if (isValidPosition(destination) && isValidColumn(getPiecePosition(), destination)) {
@@ -27,17 +30,18 @@ public class Knight extends Piece {
                         move = createMove(getBoard(), this, destination, piece);
 
                         getBoard().changeAllianceOnTile(destination, getPieceAlliance());
-                        this.legalMoves.add(move);
+                        legalMovesCache.add(move);
                     }
                 }
-                else {
+                else if (isValidColumn(getPiecePosition(), destination)) {
                     move = createMove(getBoard(), this, destination, null);
 
                     getBoard().changeAllianceOnTile(destination, getPieceAlliance());
-                    this.legalMoves.add(move);
+                    legalMovesCache.add(move);
                 }
             }
-        }
+            // Переопределение ссылки
+        } this.legalMoves = legalMovesCache;
     }
 
     // Difference between columns less than 2
