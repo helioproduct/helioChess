@@ -17,7 +17,10 @@ public class Game {
     public Alliance allianceToMove;
 
     private final int hashCode;
-    public  final MainFrame mainFrame;
+    public final MainFrame mainFrame;
+
+    private int previousClick = -1;
+    private int lastClick = -1;
 
     public Game() {
         this.hashCode = (int) System.currentTimeMillis() * 31;
@@ -73,6 +76,11 @@ public class Game {
     public void movePiece(Move move) {
         this.board.changePiecePosition(move);
         this.mainFrame.movePiece(move.getCurrentPosition(), move.getDestinationPosition());
+    }
+
+    public void handleClick(int tilePosition) {
+        this.previousClick = this.lastClick;
+        this.lastClick = tilePosition;
     }
 
     public Board getBoard() {
