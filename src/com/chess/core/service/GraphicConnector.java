@@ -9,7 +9,7 @@ import java.util.HashSet;
 
 public interface GraphicConnector {
 
-    void init();
+    void init(Game game);
     void drawTile(Tile tile);   // tile.getColor();
     void drawBoard(Board board);    // Я так понимаю здесь ты будешь вызывать drawTile();
     void drawPiece(Piece piece);   // Use piece.getColor();

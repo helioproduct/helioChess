@@ -1,5 +1,6 @@
 package com.chess.core.GUI;
 
+import com.chess.core.game.Game;
 import com.chess.core.service.Converter;
 
 import javax.imageio.ImageIO;
@@ -18,7 +19,7 @@ public class GTile extends JComponent {
     private Image pieceImage;
     private boolean targeted;
 
-    public GTile(int position, Color color, Color legalColor) {
+    public GTile(int position, Color color, Color legalColor, Game game) {
         this.x = Converter.getColumnNumber(position);
         this.y = Converter.getRowNumber(position);
         this.color = color;
@@ -27,7 +28,7 @@ public class GTile extends JComponent {
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println(position);
+                game.handleClick(position);
             }
 
             @Override
@@ -75,12 +76,10 @@ public class GTile extends JComponent {
 
     public void makeTargeted() {
         this.targeted = true;
-        this.repaint();
     }
 
     public void makeOrdinary() {
         this.targeted = false;
-        this.repaint();
     }
 
     @Override
