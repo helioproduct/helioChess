@@ -73,12 +73,16 @@ public class Board {
         long sTime = System.currentTimeMillis();
         for (Piece piece : getPieces(alliance)) piece.calculateLegalMoves();
         long totalTime = System.currentTimeMillis() - sTime;
-        System.out.println(totalTime + "\n");
+        System.out.println("legal moves updated in " + totalTime + "ms");
     }
 
     // Changes the alliance of tiles when calculating legal moves
     public void changeAllianceOnTile(int tilePosition, Alliance alliance) {
         this.board[tilePosition].changeAllianceOnTile(alliance);
+    }
+
+    public Alliance getAllianceOnTile(int position) {
+        return this.board[position].getAllianceOnTile();
     }
 
     public void changePiecePosition(final Move move) {
@@ -91,10 +95,6 @@ public class Board {
     }
 
     public void spawnPieces() {
-
-        //setPiece(45, new Knight(this, 45, Alliance.WHITE));
-
-
         // BLACK (2nd Row)
         setPiece(0, new Rook(this, 0, Alliance.BLACK));
         setPiece(1, new Knight(this, 1, Alliance.BLACK));

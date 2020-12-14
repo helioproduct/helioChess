@@ -56,7 +56,7 @@ public class Game {
     }
 
     public Player getPlayer(Alliance allianceOfPlayer) {
-        if (this.allianceToMove.equals(Alliance.WHITE)) return this.whitePlayer;
+        if (allianceOfPlayer.equals(Alliance.WHITE)) return this.whitePlayer;
         return this.blackPlayer;
     }
 
@@ -65,12 +65,7 @@ public class Game {
     }
 
     public static boolean isMoveLegal(Move move) {
-        if (move.getMovedPiece().getLegalMoves().contains(move)) {
-            System.out.println("move is legal");
-            return true;
-        }
-        System.out.println("move is not legal");
-        return false;
+        return move.getMovedPiece().getLegalMoves().contains(move);
     }
 
     public void movePiece(Move move) {

@@ -15,12 +15,12 @@ public abstract class Player {
 
     public final Game game;
     private final Alliance alliance;
-    private final String playerName;
+    private final King playerKing;
 
-    public Player(Game game, Alliance alliance, String playerName) {
+    public Player(Game game, Alliance alliance) {
         this.game = game;
         this.alliance = alliance;
-        this.playerName = playerName;
+        this.playerKing = game.getBoard().getKing(getPlayerAlliance());
     }
 
     public void makeMove() {
@@ -39,7 +39,7 @@ public abstract class Player {
                 Move move = Move.createMove(getBoard(), pieceToMove, destinationPosition, attackedPiece);
                 if (isMoveLegal(move)) {
                     this.game.movePiece(move);
-                    nextMove();
+                    nextMove(move);
                     break;
                 }
 
@@ -49,7 +49,17 @@ public abstract class Player {
         }
     }
 
-    public abstract void nextMove();
+    // Checks if the player is in check
+    public boolean isCheck() {
+
+        int kingPosition = getKing().getPiecePosition();
+        Alliance allianceOnKingTile = getBoard().getAllianceOnTile(kingPosition);
+
+        if (allianceOnKingTile == null) return false;
+        return allianceOnKingTile.equals(getOpponent().getPlayerAlliance());
+    }
+
+    public abstract void nextMove(Move lastMove);
 
     public abstract Player getOpponent();
 
@@ -58,14 +68,15 @@ public abstract class Player {
     }
 
     public King getKing() {
-        return null;
+        return this.playerKing;
     }
 
     public Board getBoard() {
         return this.game.getBoard();
     }
 
-    public String getPlayerName() {
-        return this.playerName;
+    @Override
+    public String toString() {
+        return this.getPlayerAlliance().toString();
     }
 }
