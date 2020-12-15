@@ -12,21 +12,24 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 
 public class MainFrame implements GraphicConnector {
 
     JFrame frame;
-    JPanel game, board;
+    JPanel gamePanel, board;
+    Game game;
 
-    public void init() {
+    @Override
+    public void init(Game game) {
+        this.game = game;
+
         frame = new JFrame("helioChess");
-        game = new JPanel();
-        game.setLayout(null);
-        game.setSize(new Dimension(400, 400));
-        frame.setContentPane(game);
+        gamePanel = new JPanel();
+        gamePanel.setLayout(null);
+        gamePanel.setPreferredSize(new Dimension(524, 632));
+        gamePanel.setBackground(Color.decode("#D3975C"));
+        frame.setContentPane(gamePanel);
 
         frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
@@ -36,7 +39,7 @@ public class MainFrame implements GraphicConnector {
 
     @Override
     public void drawTile(Tile tile) {
-        board.add(new GTile(tile.getTileCoordinate(), tile.getColor(), tile.getLegalColor()));
+        board.add(new GTile(tile.getTileCoordinate(), tile.getColor(), tile.getLegalColor(), game));
     }
 
     @Override
@@ -44,12 +47,13 @@ public class MainFrame implements GraphicConnector {
         frame.setResizable(false);
         this.board = new JPanel();
         this.board.setSize(new Dimension(400, 400));
+        this.board.setBorder(BorderFactory.createMatteBorder(12, 12, 12, 12, Color.decode("#7D532A")));
+        this.board.setLocation(62, 80);
         this.board.setLayout(new GridLayout(8, 8, 0, 0));
         for (int i = 0; i < 64; i ++) {
             drawTile(board.getTile(i));
         }
         frame.getContentPane().add(this.board);
-        frame.getContentPane().setPreferredSize(new Dimension(this.board.getWidth(), this.board.getHeight()));
         frame.pack();
     }
 
@@ -107,15 +111,19 @@ public class MainFrame implements GraphicConnector {
 
     @Override
     public void showLegalMoves(int[] legalMovesPositions) {
-        for (int i = 0; i < board.getComponentCount(); i++) {
-            GTile tile = (GTile) board.getComponent(i);
-            tile.makeOrdinary();
-        }
-        //System.out.println(Arrays.toString(legalMovesPositions));
         for (int i:legalMovesPositions) {
             GTile tile = (GTile) board.getComponent(i);
             tile.makeTargeted();
         }
+        board.repaint();
+    }
+
+    public void removeLegalMoves(int[] legalMovesPositions) {
+        for (int i:legalMovesPositions) {
+            GTile tile = (GTile) board.getComponent(i);
+            tile.makeOrdinary();
+        }
+        board.repaint();
     }
 
     @Override

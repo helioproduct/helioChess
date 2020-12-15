@@ -44,7 +44,7 @@ public class Game {
 
     public void run() {
 
-        mainFrame.init();
+        mainFrame.init(this);
         mainFrame.drawBoard(board);
         mainFrame.drawPieces(board.getPieces(Alliance.BLACK));
         mainFrame.drawPieces(board.getPieces(Alliance.WHITE));
