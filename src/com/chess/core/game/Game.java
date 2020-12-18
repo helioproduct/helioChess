@@ -6,6 +6,7 @@ import com.chess.core.game.player.BlackPlayer;
 import com.chess.core.game.player.Player;
 import com.chess.core.game.player.WhitePlayer;
 import com.chess.core.move.Move;
+import com.chess.core.pieces.Piece;
 
 public class Game {
 
@@ -19,8 +20,8 @@ public class Game {
     private final int hashCode;
     public final MainFrame mainFrame;
 
-    private int previousClick = -1;
-    private int lastClick = -1;
+    public Piece activePiece;
+    public int[] activeTilesPositions;
 
     public Game() {
         this.hashCode = (int) System.currentTimeMillis() * 31;
@@ -60,10 +61,6 @@ public class Game {
         return this.blackPlayer;
     }
 
-    public void showLegalMoves(int position) {
-        this.mainFrame.showLegalMoves(getBoard().getPiece(position).getLegalMovesPositions());
-    }
-
     public static boolean isMoveLegal(Move move) {
         return move.getMovedPiece().getLegalMoves().contains(move);
     }
@@ -73,9 +70,18 @@ public class Game {
         this.mainFrame.movePiece(move.getCurrentPosition(), move.getDestinationPosition());
     }
 
+    private void showLegalMoves(int[] positions) {
+        if (this.activeTilesPositions != null) {
+            this.mainFrame.removeLegalMoves(activeTilesPositions);
+        }
+        this.mainFrame.showLegalMoves(positions);
+        this.activeTilesPositions = positions;
+    }
+
     public void handleClick(int tilePosition) {
-        this.previousClick = this.lastClick;
-        this.lastClick = tilePosition;
+        Piece clickedPiece = getBoard().getPiece(tilePosition);
+
+        showLegalMoves(clickedPiece.getLegalMovesPositions());
     }
 
     public Board getBoard() {
