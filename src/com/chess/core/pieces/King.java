@@ -1,7 +1,7 @@
 package com.chess.core.pieces;
 
 import com.chess.core.board.Board;
-import com.chess.core.game.Alliance;
+import com.chess.core.game.Side;
 import com.chess.core.move.Move;
 
 import java.util.HashSet;
@@ -12,8 +12,8 @@ import static com.chess.core.service.Converter.getRowNumber;
 import static com.chess.core.service.Converter.getColumnNumber;
 
 public class King extends Piece {
-    public King(Board board, int piecePosition, Alliance alliance) {
-        super(board, piecePosition, alliance);
+    public King(Board board, int piecePosition, Side side) {
+        super(board, piecePosition, side);
     }
 
     private final int[] OFFSETS = {-9, -8, -7, -1, 1, 7, 8, 9};

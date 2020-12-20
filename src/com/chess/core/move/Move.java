@@ -22,7 +22,7 @@ public abstract class Move {
     }
 
     public static Move createMove(Board board, Piece movedPiece, int destinationPosition, Piece attackedPiece) {
-        if (attackedPiece == null) return new MajorMove(board, movedPiece, destinationPosition);
+        if (attackedPiece == null) return new PeaceMove(board, movedPiece, destinationPosition);
         return new AttackMove(board, movedPiece, destinationPosition, attackedPiece);
     }
 

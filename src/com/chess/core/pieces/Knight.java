@@ -1,7 +1,7 @@
 package com.chess.core.pieces;
 
 import com.chess.core.board.Board;
-import com.chess.core.game.Alliance;
+import com.chess.core.game.Side;
 import com.chess.core.move.Move;
 
 import java.util.HashSet;
@@ -11,8 +11,8 @@ import static com.chess.core.service.Converter.isValidPosition;
 import static com.chess.core.move.Move.createMove;
 
 public class Knight extends Piece {
-    public Knight(Board board, int piecePosition, Alliance alliance) {
-        super(board, piecePosition, alliance);
+    public Knight(Board board, int piecePosition, Side side) {
+        super(board, piecePosition, side);
     }
 
     private final int[] OFFSETS = {-17, -15, -10, -6, 6, 10, 15, 17};

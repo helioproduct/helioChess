@@ -1,6 +1,6 @@
 package com.chess.core.board;
 
-import com.chess.core.game.Alliance;
+import com.chess.core.game.Side;
 import com.chess.core.pieces.Piece;
 
 import java.awt.*;
@@ -11,7 +11,7 @@ public class Tile {
     private final int coordinate;
     private Piece pieceOnTile;
 
-    private Alliance allianceOnTile;
+    private Side sideOnTile;
     private final Color color, legalColor;
 
     public Tile(int coordinate, Piece piece) {
@@ -27,7 +27,7 @@ public class Tile {
         }
 
         setPiece(piece);
-        this.allianceOnTile = null;
+        this.sideOnTile = null;
     }
 
     public int getTileCoordinate() {
@@ -50,17 +50,17 @@ public class Tile {
         this.pieceOnTile = pieceOnTile;
     }
 
-    public void changeAllianceOnTile(Alliance allianceOnTile) {
-        this.allianceOnTile = allianceOnTile;
+    public void changeAllianceOnTile(Side sideOnTile) {
+        this.sideOnTile = sideOnTile;
     }
 
-    public Alliance getAllianceOnTile() {
-        return this.allianceOnTile;
+    public Side getAllianceOnTile() {
+        return this.sideOnTile;
     }
 
     public String tileAllianceToString() {
-        if (this.allianceOnTile == null) return "-";
-        else if (this.allianceOnTile.equals(Alliance.WHITE)) return "W";
+        if (this.sideOnTile == null) return "-";
+        else if (this.sideOnTile.equals(Side.WHITE)) return "W";
         return "B";
     }
 

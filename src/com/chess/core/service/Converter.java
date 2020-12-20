@@ -2,7 +2,7 @@ package com.chess.core.service;
 
 public class Converter {
     public static boolean isValidPosition(int position) {
-        return 0 <= position  && position <= 63;
+        return 0 <= position  && position < 64;
     }
     public static boolean isValidPosition(int x, int y) {
         return 0 <= x && x <= 7 && 0 <= y && y <= 7;

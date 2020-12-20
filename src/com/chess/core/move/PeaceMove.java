@@ -3,9 +3,9 @@ package com.chess.core.move;
 import com.chess.core.board.Board;
 import com.chess.core.pieces.Piece;
 
-public class MajorMove extends Move {
+public class PeaceMove extends Move {
 
-    protected MajorMove(Board board, Piece pieceToMove, int destinationPosition) {
+    protected PeaceMove(Board board, Piece pieceToMove, int destinationPosition) {
         super(board, pieceToMove, destinationPosition);
     }
 

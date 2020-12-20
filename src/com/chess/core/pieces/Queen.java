@@ -1,7 +1,7 @@
 package com.chess.core.pieces;
 
 import com.chess.core.board.Board;
-import com.chess.core.game.Alliance;
+import com.chess.core.game.Side;
 import com.chess.core.move.Move;
 import com.chess.core.service.Converter;
 
@@ -14,8 +14,8 @@ import static com.chess.core.service.Converter.*;
 import static com.chess.core.service.Converter.getPosition;
 
 public class Queen extends Piece {
-    public Queen(Board board, int piecePosition, Alliance alliance) {
-        super(board, piecePosition, alliance);
+    public Queen(Board board, int piecePosition, Side side) {
+        super(board, piecePosition, side);
     }
 
     // Row and column moves

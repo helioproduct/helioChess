@@ -15,7 +15,7 @@ public class Game {
     private final WhitePlayer whitePlayer;
     private final BlackPlayer blackPlayer;
 
-    public Alliance allianceToMove;
+    public Side sideToMove;
 
     private final int hashCode;
     public final MainFrame mainFrame;
@@ -28,7 +28,7 @@ public class Game {
         this.board = new Board();
         this.whitePlayer = new WhitePlayer(this);
         this.blackPlayer = new BlackPlayer(this);
-        this.allianceToMove = Alliance.WHITE;
+        this.sideToMove = Side.WHITE;
 
         this.mainFrame = new MainFrame();
     }
@@ -38,7 +38,7 @@ public class Game {
         this.board = board;
         this.whitePlayer = new WhitePlayer(this);
         this.blackPlayer = new BlackPlayer(this);
-        this.allianceToMove = Alliance.WHITE;
+        this.sideToMove = Side.WHITE;
 
         this.mainFrame = new MainFrame();
     }
@@ -47,17 +47,17 @@ public class Game {
 
         mainFrame.init(this);
         mainFrame.drawBoard(board);
-        mainFrame.drawPieces(board.getPieces(Alliance.BLACK));
-        mainFrame.drawPieces(board.getPieces(Alliance.WHITE));
+        mainFrame.drawPieces(board.getPieces(Side.BLACK));
+        mainFrame.drawPieces(board.getPieces(Side.WHITE));
 
         // while is not check mate
         while (true) {
-            this.getPlayer(allianceToMove).makeMove();
+            this.getPlayer(sideToMove).makeMove();
         }
     }
 
-    public Player getPlayer(Alliance allianceOfPlayer) {
-        if (allianceOfPlayer.equals(Alliance.WHITE)) return this.whitePlayer;
+    public Player getPlayer(Side sideOfPlayer) {
+        if (sideOfPlayer.equals(Side.WHITE)) return this.whitePlayer;
         return this.blackPlayer;
     }
 

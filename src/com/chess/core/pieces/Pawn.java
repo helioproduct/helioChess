@@ -1,7 +1,7 @@
 package com.chess.core.pieces;
 
 import com.chess.core.board.Board;
-import com.chess.core.game.Alliance;
+import com.chess.core.game.Side;
 import com.chess.core.move.Move;
 
 import java.util.HashSet;
@@ -12,8 +12,8 @@ import static com.chess.core.service.Converter.isValidPosition;
 import static com.chess.core.move.Move.createMove;
 
 public class Pawn extends Piece {
-    public Pawn(Board board, int piecePosition, Alliance alliance) {
-        super(board, piecePosition, alliance);
+    public Pawn(Board board, int piecePosition, Side side) {
+        super(board, piecePosition, side);
     }
 
     @Override
@@ -91,12 +91,12 @@ public class Pawn extends Piece {
     }
 
     private int getDirection() {
-        if (getPieceAlliance().equals(Alliance.WHITE)) return -1;
+        if (getPieceAlliance().equals(Side.WHITE)) return -1;
         else return 1;
     }
 
     private boolean isAbleToJump() {
-        if (getPieceAlliance().equals(Alliance.WHITE)) return getRowNumber(getPiecePosition()) == 6;
+        if (getPieceAlliance().equals(Side.WHITE)) return getRowNumber(getPiecePosition()) == 6;
         return getRowNumber(getPiecePosition()) == 1;
     }
 

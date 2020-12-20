@@ -1,6 +1,6 @@
 package com.chess.core.board;
 
-import com.chess.core.game.Alliance;
+import com.chess.core.game.Side;
 import com.chess.core.move.Move;
 import com.chess.core.pieces.*;
 
@@ -24,12 +24,12 @@ public class Board {
     public Board() {
         this.board = createEmptyBoard();
         spawnPieces();
-        updateLegalMoves(Alliance.WHITE);
+        updateLegalMoves(Side.WHITE);
     }
 
     public Board(Tile[] boardConfiguration) {
         this.board = boardConfiguration;
-        updateLegalMoves(Alliance.WHITE);
+        updateLegalMoves(Side.WHITE);
     }
 
     private Tile[] createEmptyBoard() {
@@ -48,40 +48,40 @@ public class Board {
 
     public void setPiece(int position, Piece piece) {
         this.board[position].setPiece(piece);
-        if (piece.getPieceAlliance().equals(Alliance.WHITE)) this.currentWhitePieces.add(piece);
+        if (piece.getPieceAlliance().equals(Side.WHITE)) this.currentWhitePieces.add(piece);
         else this.currentBlackPieces.add(piece);
     }
 
     public void removePiece(int position) {
         final Piece pieceToRemove = this.getPiece(position);
-        if (pieceToRemove.getPieceAlliance().equals(Alliance.WHITE)) this.currentWhitePieces.remove(pieceToRemove);
+        if (pieceToRemove.getPieceAlliance().equals(Side.WHITE)) this.currentWhitePieces.remove(pieceToRemove);
         else this.currentBlackPieces.remove(pieceToRemove);
         board[position].clearTile();
     }
 
-    public HashSet<Piece> getPieces(Alliance alliance) {
-        if (alliance.equals(Alliance.WHITE)) return this.currentWhitePieces;
+    public HashSet<Piece> getPieces(Side side) {
+        if (side.equals(Side.WHITE)) return this.currentWhitePieces;
         else return this.currentBlackPieces;
     }
 
-    public King getKing(Alliance alliance) {
-        if (alliance.equals(Alliance.WHITE)) return this.whiteKing;
+    public King getKing(Side side) {
+        if (side.equals(Side.WHITE)) return this.whiteKing;
         return this.blackKing;
     }
 
-    public void updateLegalMoves(Alliance alliance) {
+    public void updateLegalMoves(Side side) {
         long sTime = System.currentTimeMillis();
-        for (Piece piece : getPieces(alliance)) piece.calculateLegalMoves();
+        for (Piece piece : getPieces(side)) piece.calculateLegalMoves();
         long totalTime = System.currentTimeMillis() - sTime;
         System.out.println("legal moves updated in " + totalTime + "ms");
     }
 
     // Changes the alliance of tiles when calculating legal moves
-    public void changeAllianceOnTile(int tilePosition, Alliance alliance) {
-        this.board[tilePosition].changeAllianceOnTile(alliance);
+    public void changeAllianceOnTile(int tilePosition, Side side) {
+        this.board[tilePosition].changeAllianceOnTile(side);
     }
 
-    public Alliance getAllianceOnTile(int position) {
+    public Side getAllianceOnTile(int position) {
         return this.board[position].getAllianceOnTile();
     }
 
@@ -96,44 +96,44 @@ public class Board {
 
     public void spawnPieces() {
         // BLACK (2nd Row)
-        setPiece(0, new Rook(this, 0, Alliance.BLACK));
-        setPiece(1, new Knight(this, 1, Alliance.BLACK));
-        setPiece(2, new Bishop(this, 2, Alliance.BLACK));
-        setPiece(3, new Queen(this, 3, Alliance.BLACK));
-        setPiece(4, new King(this, 4, Alliance.BLACK));
-        setPiece(5, new Bishop(this, 5, Alliance.BLACK));
-        setPiece(6, new Knight(this, 6, Alliance.BLACK));
-        setPiece(7, new Rook(this, 7, Alliance.BLACK));
+        setPiece(0, new Rook(this, 0, Side.BLACK));
+        setPiece(1, new Knight(this, 1, Side.BLACK));
+        setPiece(2, new Bishop(this, 2, Side.BLACK));
+        setPiece(3, new Queen(this, 3, Side.BLACK));
+        setPiece(4, new King(this, 4, Side.BLACK));
+        setPiece(5, new Bishop(this, 5, Side.BLACK));
+        setPiece(6, new Knight(this, 6, Side.BLACK));
+        setPiece(7, new Rook(this, 7, Side.BLACK));
 
         // BlACK PAWNS (1st Row)
-        setPiece(8, new Pawn(this, 8, Alliance.BLACK));
-        setPiece(9, new Pawn(this, 9, Alliance.BLACK));
-        setPiece(10, new Pawn(this, 10, Alliance.BLACK));
-        setPiece(11, new Pawn(this, 11, Alliance.BLACK));
-        setPiece(12, new Pawn(this, 12, Alliance.BLACK));
-        setPiece(13, new Pawn(this, 13, Alliance.BLACK));
-        setPiece(14, new Pawn(this, 14, Alliance.BLACK));
-        setPiece(15, new Pawn(this, 15, Alliance.BLACK));
+        setPiece(8, new Pawn(this, 8, Side.BLACK));
+        setPiece(9, new Pawn(this, 9, Side.BLACK));
+        setPiece(10, new Pawn(this, 10, Side.BLACK));
+        setPiece(11, new Pawn(this, 11, Side.BLACK));
+        setPiece(12, new Pawn(this, 12, Side.BLACK));
+        setPiece(13, new Pawn(this, 13, Side.BLACK));
+        setPiece(14, new Pawn(this, 14, Side.BLACK));
+        setPiece(15, new Pawn(this, 15, Side.BLACK));
 
         // WHITE (1st Row)
-        setPiece(56, new Rook(this, 56, Alliance.WHITE));
-        setPiece(57, new Knight(this, 57, Alliance.WHITE));
-        setPiece(58, new Bishop(this, 58, Alliance.WHITE));
-        setPiece(59, new Queen(this, 59, Alliance.WHITE));
-        setPiece(60, new King(this, 60, Alliance.WHITE));
-        setPiece(61, new Bishop(this, 61, Alliance.WHITE));
-        setPiece(62, new Knight(this, 62, Alliance.WHITE));
-        setPiece(63, new Rook(this, 63, Alliance.WHITE));
-        setPiece(48, new Pawn(this, 48, Alliance.WHITE));
+        setPiece(56, new Rook(this, 56, Side.WHITE));
+        setPiece(57, new Knight(this, 57, Side.WHITE));
+        setPiece(58, new Bishop(this, 58, Side.WHITE));
+        setPiece(59, new Queen(this, 59, Side.WHITE));
+        setPiece(60, new King(this, 60, Side.WHITE));
+        setPiece(61, new Bishop(this, 61, Side.WHITE));
+        setPiece(62, new Knight(this, 62, Side.WHITE));
+        setPiece(63, new Rook(this, 63, Side.WHITE));
+        setPiece(48, new Pawn(this, 48, Side.WHITE));
 
         // WHITE PAWNS (2nd Row)
-        setPiece(49, new Pawn(this, 49, Alliance.WHITE));
-        setPiece(50, new Pawn(this, 50, Alliance.WHITE));
-        setPiece(51, new Pawn(this, 51, Alliance.WHITE));
-        setPiece(52, new Pawn(this, 52, Alliance.WHITE));
-        setPiece(53, new Pawn(this, 53, Alliance.WHITE));
-        setPiece(54, new Pawn(this, 54, Alliance.WHITE));
-        setPiece(55, new Pawn(this ,55, Alliance.WHITE));
+        setPiece(49, new Pawn(this, 49, Side.WHITE));
+        setPiece(50, new Pawn(this, 50, Side.WHITE));
+        setPiece(51, new Pawn(this, 51, Side.WHITE));
+        setPiece(52, new Pawn(this, 52, Side.WHITE));
+        setPiece(53, new Pawn(this, 53, Side.WHITE));
+        setPiece(54, new Pawn(this, 54, Side.WHITE));
+        setPiece(55, new Pawn(this ,55, Side.WHITE));
 
         // Saving kings
         this.blackKing = (King) this.getPiece(4);

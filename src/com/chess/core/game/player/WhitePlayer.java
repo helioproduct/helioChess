@@ -1,28 +1,25 @@
 package com.chess.core.game.player;
 
-import com.chess.core.board.Tile;
-import com.chess.core.game.Alliance;
+import com.chess.core.game.Side;
 import com.chess.core.game.Game;
 import com.chess.core.move.Move;
-import com.chess.core.pieces.King;
-import com.chess.core.pieces.Piece;
 
 public class WhitePlayer extends Player {
 
     public WhitePlayer(Game game) {
-        super(game, Alliance.WHITE);
+        super(game, Side.WHITE);
     }
 
     @Override
     public Player getOpponent() {
-        return this.game.getPlayer(Alliance.BLACK);
+        return this.game.getPlayer(Side.BLACK);
     }
 
     @Override
     public void nextMove(Move lastMove) {
 
         // CHECK FOR CHECK;
-        this.game.getBoard().updateLegalMoves(Alliance.WHITE);
+        this.game.getBoard().updateLegalMoves(Side.WHITE);
 
         if (getOpponent().isCheck()) {
             System.out.println("CHECK");
@@ -30,7 +27,7 @@ public class WhitePlayer extends Player {
             System.out.println("NOT CHECK");
         }
 
-        this.game.allianceToMove = Alliance.BLACK;
-        this.game.getBoard().updateLegalMoves(Alliance.BLACK);
+        this.game.sideToMove = Side.BLACK;
+        this.game.getBoard().updateLegalMoves(Side.BLACK);
     }
 }

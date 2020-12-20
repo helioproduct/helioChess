@@ -1,7 +1,7 @@
 package com.chess.core.game.player;
 
 import com.chess.core.board.Board;
-import com.chess.core.game.Alliance;
+import com.chess.core.game.Side;
 import com.chess.core.game.Game;
 import com.chess.core.move.Move;
 import com.chess.core.pieces.King;
@@ -9,12 +9,12 @@ import com.chess.core.pieces.King;
 public abstract class Player {
 
     public final Game game;
-    private final Alliance alliance;
+    private final Side side;
     private final King playerKing;
 
-    public Player(Game game, Alliance alliance) {
+    public Player(Game game, Side side) {
         this.game = game;
-        this.alliance = alliance;
+        this.side = side;
         this.playerKing = game.getBoard().getKing(getPlayerAlliance());
     }
 
@@ -26,18 +26,18 @@ public abstract class Player {
     public boolean isCheck() {
 
         int kingPosition = getKing().getPiecePosition();
-        Alliance allianceOnKingTile = getBoard().getAllianceOnTile(kingPosition);
+        Side sideOnKingTile = getBoard().getAllianceOnTile(kingPosition);
 
-        if (allianceOnKingTile == null) return false;
-        return allianceOnKingTile.equals(getOpponent().getPlayerAlliance());
+        if (sideOnKingTile == null) return false;
+        return sideOnKingTile.equals(getOpponent().getPlayerAlliance());
     }
 
     public abstract void nextMove(Move lastMove);
 
     public abstract Player getOpponent();
 
-    public Alliance getPlayerAlliance() {
-        return this.alliance;
+    public Side getPlayerAlliance() {
+        return this.side;
     }
 
     public King getKing() {

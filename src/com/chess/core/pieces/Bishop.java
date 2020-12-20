@@ -1,7 +1,7 @@
 package com.chess.core.pieces;
 
 import com.chess.core.board.Board;
-import com.chess.core.game.Alliance;
+import com.chess.core.game.Side;
 import com.chess.core.move.Move;
 import static com.chess.core.move.Move.createMove;
 
@@ -10,8 +10,8 @@ import java.util.HashSet;
 import static com.chess.core.service.Converter.*;
 
 public class Bishop extends Piece {
-    public Bishop(Board board, int piecePosition, Alliance alliance) {
-        super(board, piecePosition, alliance);
+    public Bishop(Board board, int piecePosition, Side side) {
+        super(board, piecePosition, side);
     }
 
     private final int[] DIRECTIONS = {-1, 1};

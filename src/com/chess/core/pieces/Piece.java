@@ -1,7 +1,7 @@
 package com.chess.core.pieces;
 
 import com.chess.core.board.Board;
-import com.chess.core.game.Alliance;
+import com.chess.core.game.Side;
 import com.chess.core.move.Move;
 
 import java.awt.*;
@@ -12,7 +12,7 @@ public abstract class Piece {
     private final Board board;
 
     private int position;
-    private final Alliance alliance;
+    private final Side side;
     private final String pieceName;
 
     // LegalMoves
@@ -24,15 +24,15 @@ public abstract class Piece {
     // GUI
     private final Color color;
 
-    public Piece(Board board, int position, Alliance alliance) {
+    public Piece(Board board, int position, Side side) {
         this.board = board;
         this.position = position;
-        this.alliance = alliance;
+        this.side = side;
         this.pieceName = this.getClass().getSimpleName();
 
         this.cachedHashCode = calculateHashCode();
 
-        if (this.alliance.equals(Alliance.WHITE)) this.color = Color.WHITE;
+        if (this.side.equals(Side.WHITE)) this.color = Color.WHITE;
         else this.color = Color.BLACK;
     }
 
@@ -59,8 +59,8 @@ public abstract class Piece {
     public String getPieceName() {
         return this.pieceName;
     }
-    public Alliance getPieceAlliance() {
-        return this.alliance;
+    public Side getPieceAlliance() {
+        return this.side;
     }
     public HashSet<Move> getLegalMoves() {
         return this.legalMoves;
@@ -68,7 +68,7 @@ public abstract class Piece {
 
     private int calculateHashCode() {
         int hash = 1;
-        if (this.getPieceAlliance().equals(Alliance.WHITE)) hash *= 11;
+        if (this.getPieceAlliance().equals(Side.WHITE)) hash *= 11;
         else hash *= 31;
         hash += this.pieceName.hashCode();
         return hash;
@@ -86,7 +86,7 @@ public abstract class Piece {
 
     @Override
     public String toString() {
-        if (getPieceAlliance().equals(Alliance.WHITE)) return String.valueOf(this.getPieceName().toCharArray()[0]);
+        if (getPieceAlliance().equals(Side.WHITE)) return String.valueOf(this.getPieceName().toCharArray()[0]);
         return String.valueOf(this.getPieceName().toCharArray()[0]).toLowerCase();
     }
 
