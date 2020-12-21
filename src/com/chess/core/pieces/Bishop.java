@@ -2,8 +2,8 @@ package com.chess.core.pieces;
 
 import com.chess.core.board.Board;
 import com.chess.core.game.Side;
-import com.chess.core.move.Move;
-import static com.chess.core.move.Move.createMove;
+import com.chess.core.game.move.Move;
+import static com.chess.core.game.move.Move.createMove;
 
 import java.util.HashSet;
 
@@ -38,16 +38,16 @@ public class Bishop extends Piece {
 
                     // Tile is empty
                     if (!this.getBoard().getTile(destination).isTileOccupied()) {
-                        move = createMove(getBoard(), this, destination, null);
-                        getBoard().changeAllianceOnTile(destination, getPieceAlliance());
+                        move = createMove(this, destination, null);
+                        getBoard().changeAllianceOnTile(destination, getPieceSide());
                         legalMovesCache.add(move);
                     }
                     // Tile is occupied
                     else {
                         Piece pieceOnTile = getBoard().getPiece(destination);
-                        if (!pieceOnTile.getPieceAlliance().equals(this.getPieceAlliance())) {
-                            move = createMove(getBoard(), this, destination, pieceOnTile);
-                            getBoard().changeAllianceOnTile(destination, getPieceAlliance());
+                        if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
+                            move = createMove(this, destination, pieceOnTile);
+                            getBoard().changeAllianceOnTile(destination, getPieceSide());
                             legalMovesCache.add(move);
                         } break;
                     }
@@ -66,16 +66,16 @@ public class Bishop extends Piece {
 
                     // Tile is empty
                     if (!this.getBoard().getTile(destination).isTileOccupied()) {
-                        move = createMove(getBoard(), this, destination, null);
-                        getBoard().changeAllianceOnTile(destination, getPieceAlliance());
+                        move = createMove(this, destination, null);
+                        getBoard().changeAllianceOnTile(destination, getPieceSide());
                         legalMovesCache.add(move);
                     }
                     // Tile is occupied
                     else {
                         Piece pieceOnTile = getBoard().getPiece(destination);
-                        if (!pieceOnTile.getPieceAlliance().equals(this.getPieceAlliance())) {
-                            move = createMove(getBoard(), this, destination, pieceOnTile);
-                            getBoard().changeAllianceOnTile(destination, getPieceAlliance());
+                        if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
+                            move = createMove(this, destination, pieceOnTile);
+                            getBoard().changeAllianceOnTile(destination, getPieceSide());
                             legalMovesCache.add(move);
                         } break;
                     }

@@ -1,7 +1,7 @@
 package com.chess.core.board;
 
 import com.chess.core.game.Side;
-import com.chess.core.move.Move;
+import com.chess.core.game.move.Move;
 import com.chess.core.pieces.*;
 
 import static com.chess.core.service.DataVisualizer.visualizeBoard;
@@ -48,13 +48,13 @@ public class Board {
 
     public void setPiece(int position, Piece piece) {
         this.board[position].setPiece(piece);
-        if (piece.getPieceAlliance().equals(Side.WHITE)) this.currentWhitePieces.add(piece);
+        if (piece.getPieceSide().equals(Side.WHITE)) this.currentWhitePieces.add(piece);
         else this.currentBlackPieces.add(piece);
     }
 
     public void removePiece(int position) {
         final Piece pieceToRemove = this.getPiece(position);
-        if (pieceToRemove.getPieceAlliance().equals(Side.WHITE)) this.currentWhitePieces.remove(pieceToRemove);
+        if (pieceToRemove.getPieceSide().equals(Side.WHITE)) this.currentWhitePieces.remove(pieceToRemove);
         else this.currentBlackPieces.remove(pieceToRemove);
         board[position].clearTile();
     }

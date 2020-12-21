@@ -2,11 +2,14 @@ package com.chess.core.game;
 
 import com.chess.core.GUI.MainFrame;
 import com.chess.core.board.Board;
+import com.chess.core.board.Tile;
+import com.chess.core.game.move.Move;
 import com.chess.core.game.player.BlackPlayer;
 import com.chess.core.game.player.Player;
 import com.chess.core.game.player.WhitePlayer;
-import com.chess.core.move.Move;
 import com.chess.core.pieces.Piece;
+
+import static java.util.Objects.isNull;
 
 public class Game {
 
@@ -50,7 +53,7 @@ public class Game {
         mainFrame.drawPieces(board.getPieces(Side.BLACK));
         mainFrame.drawPieces(board.getPieces(Side.WHITE));
 
-        // while is not check mate
+        // while true временно
         while (true) {
             this.getPlayer(sideToMove).makeMove();
         }
@@ -79,9 +82,23 @@ public class Game {
     }
 
     public void handleClick(int tilePosition) {
-        Piece clickedPiece = getBoard().getPiece(tilePosition);
+        Tile clickedTile = getBoard().getTile(tilePosition);
+        Piece pieceOnTile = clickedTile.getPiece();
 
-        showLegalMoves(clickedPiece.getLegalMovesPositions());
+        if (isNull(activePiece)) {
+            if (pieceOnTile.getPieceSide().equals(sideToMove)) {
+                this.activePiece = pieceOnTile;
+                showLegalMoves(activePiece.getLegalMovesPositions());
+            }
+        }
+
+        else {
+            Piece attackedPiece = getBoard().getPiece(tilePosition);
+            Move move = Move.createMove(activePiece, tilePosition, attackedPiece);
+            if (isMoveLegal(move)) {
+                this.movePiece(move);
+            }
+        }
     }
 
     public Board getBoard() {
@@ -93,3 +110,6 @@ public class Game {
         return this.hashCode;
     }
 }
+
+
+

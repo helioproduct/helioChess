@@ -1,11 +1,9 @@
-package com.chess.core.move;
+package com.chess.core.game.move;
 
-import com.chess.core.board.Board;
 import com.chess.core.pieces.Piece;
 
 public abstract class Move {
 
-    private final Board board;
     private final Piece movedPiece;
 
     private final int currentPosition;
@@ -13,17 +11,16 @@ public abstract class Move {
 
     private final int hashCode;
 
-    protected Move(Board board, Piece pieceToMove, int destinationPosition) {
-        this.board = board;
+    protected Move(Piece pieceToMove, int destinationPosition) {
         this.movedPiece = pieceToMove;
         this.currentPosition = pieceToMove.getPiecePosition();
         this.destinationPosition = destinationPosition;
         this.hashCode = calculateHashCode();
     }
 
-    public static Move createMove(Board board, Piece movedPiece, int destinationPosition, Piece attackedPiece) {
-        if (attackedPiece == null) return new PeaceMove(board, movedPiece, destinationPosition);
-        return new AttackMove(board, movedPiece, destinationPosition, attackedPiece);
+    public static Move createMove(Piece movedPiece, int destinationPosition, Piece attackedPiece) {
+        if (attackedPiece == null) return new PeaceMove(movedPiece, destinationPosition);
+        return new AttackMove(movedPiece, destinationPosition, attackedPiece);
     }
 
     public Piece getMovedPiece() {

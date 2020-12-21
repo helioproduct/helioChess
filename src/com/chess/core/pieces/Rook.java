@@ -2,10 +2,10 @@ package com.chess.core.pieces;
 
 import com.chess.core.board.Board;
 import com.chess.core.game.Side;
-import com.chess.core.move.Move;
+import com.chess.core.game.move.Move;
 import static com.chess.core.service.Converter.getRowNumber;
 import static com.chess.core.service.Converter.getColumnNumber;
-import static com.chess.core.move.Move.createMove;
+import static com.chess.core.game.move.Move.createMove;
 
 import java.util.HashSet;
 
@@ -30,19 +30,19 @@ public class Rook extends Piece {
 
                 // Tile is Empty
                 if (!getBoard().getTile(position).isTileOccupied()) {
-                    move = createMove(getBoard(), this, position, null);
+                    move = createMove(this, position, null);
 
-                    getBoard().changeAllianceOnTile(position, getPieceAlliance());
+                    getBoard().changeAllianceOnTile(position, getPieceSide());
                     legalMovesCache.add(move);
                 }
                 // Tile is Occupied
                 else {
                     Piece piece = getBoard().getTile(position).getPiece();
                     // Break when tile is Occupied by the same Alliance
-                    if (!piece.getPieceAlliance().equals(this.getPieceAlliance())) {
-                        move = createMove(getBoard(), this, position, piece);
+                    if (!piece.getPieceSide().equals(this.getPieceSide())) {
+                        move = createMove(this, position, piece);
 
-                        getBoard().changeAllianceOnTile(position, getPieceAlliance());
+                        getBoard().changeAllianceOnTile(position, getPieceSide());
                         legalMovesCache.add(move);
                     }
                     break;

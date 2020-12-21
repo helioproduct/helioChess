@@ -2,13 +2,13 @@ package com.chess.core.pieces;
 
 import com.chess.core.board.Board;
 import com.chess.core.game.Side;
-import com.chess.core.move.Move;
+import com.chess.core.game.move.Move;
 
 import java.util.HashSet;
 
 import static com.chess.core.service.Converter.getColumnNumber;
 import static com.chess.core.service.Converter.isValidPosition;
-import static com.chess.core.move.Move.createMove;
+import static com.chess.core.game.move.Move.createMove;
 
 public class Knight extends Piece {
     public Knight(Board board, int piecePosition, Side side) {
@@ -26,17 +26,17 @@ public class Knight extends Piece {
                 Move move;
                 if (getBoard().getTile(destination).isTileOccupied()) {
                     Piece piece = getBoard().getTile(destination).getPiece();
-                    if (!piece.getPieceAlliance().equals(this.getPieceAlliance())) {
-                        move = createMove(getBoard(), this, destination, piece);
+                    if (!piece.getPieceSide().equals(this.getPieceSide())) {
+                        move = createMove(this, destination, piece);
 
-                        getBoard().changeAllianceOnTile(destination, getPieceAlliance());
+                        getBoard().changeAllianceOnTile(destination, getPieceSide());
                         legalMovesCache.add(move);
                     }
                 }
                 else if (isValidColumn(getPiecePosition(), destination)) {
-                    move = createMove(getBoard(), this, destination, null);
+                    move = createMove(this, destination, null);
 
-                    getBoard().changeAllianceOnTile(destination, getPieceAlliance());
+                    getBoard().changeAllianceOnTile(destination, getPieceSide());
                     legalMovesCache.add(move);
                 }
             }

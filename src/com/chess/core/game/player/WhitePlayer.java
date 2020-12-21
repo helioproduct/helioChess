@@ -2,7 +2,7 @@ package com.chess.core.game.player;
 
 import com.chess.core.game.Side;
 import com.chess.core.game.Game;
-import com.chess.core.move.Move;
+import com.chess.core.game.move.Move;
 
 public class WhitePlayer extends Player {
 

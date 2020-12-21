@@ -2,7 +2,7 @@ package com.chess.core.pieces;
 
 import com.chess.core.board.Board;
 import com.chess.core.game.Side;
-import com.chess.core.move.Move;
+import com.chess.core.game.move.Move;
 
 import java.awt.*;
 import java.util.HashSet;
@@ -59,7 +59,7 @@ public abstract class Piece {
     public String getPieceName() {
         return this.pieceName;
     }
-    public Side getPieceAlliance() {
+    public Side getPieceSide() {
         return this.side;
     }
     public HashSet<Move> getLegalMoves() {
@@ -68,7 +68,7 @@ public abstract class Piece {
 
     private int calculateHashCode() {
         int hash = 1;
-        if (this.getPieceAlliance().equals(Side.WHITE)) hash *= 11;
+        if (this.getPieceSide().equals(Side.WHITE)) hash *= 11;
         else hash *= 31;
         hash += this.pieceName.hashCode();
         return hash;
@@ -86,7 +86,7 @@ public abstract class Piece {
 
     @Override
     public String toString() {
-        if (getPieceAlliance().equals(Side.WHITE)) return String.valueOf(this.getPieceName().toCharArray()[0]);
+        if (getPieceSide().equals(Side.WHITE)) return String.valueOf(this.getPieceName().toCharArray()[0]);
         return String.valueOf(this.getPieceName().toCharArray()[0]).toLowerCase();
     }
 

@@ -3,8 +3,9 @@ package com.chess.core.game.player;
 import com.chess.core.board.Board;
 import com.chess.core.game.Side;
 import com.chess.core.game.Game;
-import com.chess.core.move.Move;
+import com.chess.core.game.move.Move;
 import com.chess.core.pieces.King;
+import com.chess.core.pieces.Piece;
 
 public abstract class Player {
 
