@@ -3,6 +3,7 @@ package com.chess.core.GUI;
 import com.chess.core.board.Board;
 import com.chess.core.board.Tile;
 import com.chess.core.game.Game;
+import com.chess.core.game.Side;
 import com.chess.core.pieces.Piece;
 import com.chess.core.service.GraphicConnector;
 
@@ -14,11 +15,18 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashSet;
 
-public class MainFrame implements GraphicConnector {
+public class MainFrame implements GraphicConnector, Runnable {
 
     JFrame frame;
     JPanel gamePanel, board;
     Game game;
+
+    @Override
+    public void run() {
+        drawBoard(game.getBoard());
+        drawPieces(game.getBoard().getPieces(Side.BLACK));
+        drawPieces(game.getBoard().getPieces(Side.WHITE));
+    }
 
     @Override
     public void init(Game game) {

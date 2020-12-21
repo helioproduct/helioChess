@@ -49,9 +49,8 @@ public class Game {
     public void run() {
 
         mainFrame.init(this);
-        mainFrame.drawBoard(board);
-        mainFrame.drawPieces(board.getPieces(Side.BLACK));
-        mainFrame.drawPieces(board.getPieces(Side.WHITE));
+        Thread GUI = new Thread(mainFrame, "GUI");
+        GUI.start();
 
         // while true временно
         while (true) {
@@ -82,23 +81,8 @@ public class Game {
     }
 
     public void handleClick(int tilePosition) {
-        Tile clickedTile = getBoard().getTile(tilePosition);
-        Piece pieceOnTile = clickedTile.getPiece();
-
-        if (isNull(activePiece)) {
-            if (pieceOnTile.getPieceSide().equals(sideToMove)) {
-                this.activePiece = pieceOnTile;
-                showLegalMoves(activePiece.getLegalMovesPositions());
-            }
-        }
-
-        else {
-            Piece attackedPiece = getBoard().getPiece(tilePosition);
-            Move move = Move.createMove(activePiece, tilePosition, attackedPiece);
-            if (isMoveLegal(move)) {
-                this.movePiece(move);
-            }
-        }
+        Piece clickedPiece = getBoard().getPiece(tilePosition);
+        showLegalMoves(clickedPiece.getLegalMovesPositions());
     }
 
     public Board getBoard() {
