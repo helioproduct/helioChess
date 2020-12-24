@@ -16,15 +16,17 @@ public class BlackPlayer extends Player {
     }
 
     @Override
-    public void nextMove(Move lastMove) {
+    public void nextMove() {
 
         // CHECK FOR CHECK
         this.game.getBoard().updateLegalMoves(Side.BLACK);
 
         if (getOpponent().isCheck()) {
             System.out.println("CHECK");
+            System.out.println();
         } else {
             System.out.println("NOT CHECK");
+            System.out.println();
         }
 
         this.game.sideToMove = Side.WHITE;

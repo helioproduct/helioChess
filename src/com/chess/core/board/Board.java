@@ -73,7 +73,7 @@ public class Board {
         long sTime = System.currentTimeMillis();
         for (Piece piece : getPieces(side)) piece.calculateLegalMoves();
         long totalTime = System.currentTimeMillis() - sTime;
-        System.out.println("legal moves updated in " + totalTime + "ms");
+        //System.out.println("legal moves updated in " + totalTime + "ms");
     }
 
     // Changes the alliance of tiles when calculating legal moves

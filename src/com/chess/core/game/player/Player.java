@@ -19,8 +19,27 @@ public abstract class Player {
         this.playerKing = game.getBoard().getKing(getPlayerAlliance());
     }
 
-    public void makeMove() {
+    public void makeMove(Piece pieceToMove, int destination) {
+        Move move = Move.createMove(pieceToMove, destination, getBoard().getPiece(destination));
 
+        // Player making move
+        if (isMoveLegal(move)) {
+            this.game.movePiece(move);
+            nextMove();
+        }
+        /*
+
+        Something went wrong
+        for e.g. player clicked on the wrong tile or clicked on another Piece
+        -> Player should try new move
+
+        handleClick back to Game.class
+
+        */
+        else {
+            this.game.removeLegalMoves();
+            this.game.isFirstClick = true;
+        }
     }
 
     // Checks if the player is in check
@@ -33,7 +52,13 @@ public abstract class Player {
         return sideOnKingTile.equals(getOpponent().getPlayerAlliance());
     }
 
-    public abstract void nextMove(Move lastMove);
+    public static boolean isMoveLegal(Move move) {
+        return move.getMovedPiece().getLegalMoves().contains(move);
+    }
+
+    // TODO : CHECK MATE CALCULATION
+    // Передает ход другому игроку, просчитавает шах
+    public abstract void nextMove();
 
     public abstract Player getOpponent();
 
