@@ -20,14 +20,7 @@ public class BlackPlayer extends Player {
 
         // CHECK FOR CHECK
         this.game.getBoard().updateLegalMoves(Side.BLACK);
-
-        if (getOpponent().isCheck()) {
-            System.out.println("CHECK");
-            System.out.println();
-        } else {
-            System.out.println("NOT CHECK");
-            System.out.println();
-        }
+        if (getOpponent().isCheck()) this.game.mainFrame.showCheckPopup();
 
         this.game.sideToMove = Side.WHITE;
         this.game.getBoard().updateLegalMoves(Side.WHITE);
