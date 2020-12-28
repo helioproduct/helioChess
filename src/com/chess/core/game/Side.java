@@ -6,7 +6,7 @@ public enum Side {
 
     @Override
     public String toString() {
-        if (this.equals(Side.WHITE)) return "WHITE";
-        return "BLACK";
+        if (this.equals(Side.WHITE)) return "W";
+        return "B";
     }
 }

@@ -62,9 +62,6 @@ public class Pawn extends Piece {
 
         if (isValidPosition(destination) && isValidColumn(destination)) {
 
-            // Changing Alliance On Tile
-            getBoard().changeAllianceOnTile(destination, getPieceSide());
-
             if (getBoard().getTile(destination).isTileOccupied()) {
                 Piece pieceOnTile = getBoard().getPiece(destination);
                 if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
@@ -77,8 +74,6 @@ public class Pawn extends Piece {
         destination = getPiecePosition() + attackOffsetRight;
         if (isValidPosition(destination) && isValidColumn(destination)) {
 
-            // Changing Alliance On Tile
-            getBoard().changeAllianceOnTile(destination, getPieceSide());
 
             if (getBoard().getTile(destination).isTileOccupied()) {
                 Piece pieceOnTile = getBoard().getPiece(destination);

@@ -54,7 +54,7 @@ public class Tile {
         this.sideOnTile = sideOnTile;
     }
 
-    public Side getAllianceOnTile() {
+    public Side getSideOnTile() {
         return this.sideOnTile;
     }
 
@@ -71,7 +71,6 @@ public class Tile {
     }
 
     // GUI
-
     public Color getColor() {
         return this.color;
     }

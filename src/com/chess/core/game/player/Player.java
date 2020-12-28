@@ -27,6 +27,7 @@ public abstract class Player {
             this.game.movePiece(move);
             nextMove();
         }
+
         /*
 
         Something went wrong
@@ -40,16 +41,6 @@ public abstract class Player {
             this.game.removeLegalMoves();
             this.game.isFirstClick = true;
         }
-    }
-
-    // Checks if the player is in check
-    public boolean isCheck() {
-
-        int kingPosition = getKing().getPiecePosition();
-        Side sideOnKingTile = getBoard().getAllianceOnTile(kingPosition);
-
-        if (sideOnKingTile == null) return false;
-        return sideOnKingTile.equals(getOpponent().getPlayerAlliance());
     }
 
     public static boolean isMoveLegal(Move move) {

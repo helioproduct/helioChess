@@ -31,8 +31,6 @@ public class Rook extends Piece {
                 // Tile is Empty
                 if (!getBoard().getTile(position).isTileOccupied()) {
                     move = createMove(this, position, null);
-
-                    getBoard().changeAllianceOnTile(position, getPieceSide());
                     legalMovesCache.add(move);
                 }
                 // Tile is Occupied
@@ -41,8 +39,6 @@ public class Rook extends Piece {
                     // Break when tile is Occupied by the same Alliance
                     if (!piece.getPieceSide().equals(this.getPieceSide())) {
                         move = createMove(this, position, piece);
-
-                        getBoard().changeAllianceOnTile(position, getPieceSide());
                         legalMovesCache.add(move);
                     }
                     break;

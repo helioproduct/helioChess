@@ -29,14 +29,12 @@ public class Knight extends Piece {
                     if (!piece.getPieceSide().equals(this.getPieceSide())) {
                         move = createMove(this, destination, piece);
 
-                        getBoard().changeAllianceOnTile(destination, getPieceSide());
                         legalMovesCache.add(move);
                     }
                 }
                 else if (isValidColumn(getPiecePosition(), destination)) {
                     move = createMove(this, destination, null);
 
-                    getBoard().changeAllianceOnTile(destination, getPieceSide());
                     legalMovesCache.add(move);
                 }
             }

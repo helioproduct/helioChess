@@ -19,7 +19,6 @@ public class WhitePlayer extends Player {
 
         // CHECK FOR CHECK;
         this.game.getBoard().updateLegalMoves(Side.WHITE);
-        if (getOpponent().isCheck()) this.game.mainFrame.showCheckPopup();
 
         this.game.sideToMove = Side.BLACK;
         this.game.getBoard().updateLegalMoves(Side.BLACK);

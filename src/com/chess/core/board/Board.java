@@ -70,19 +70,14 @@ public class Board {
     }
 
     public void updateLegalMoves(Side side) {
-        long sTime = System.currentTimeMillis();
+        //long sTime = System.currentTimeMillis();
+
         for (Piece piece : getPieces(side)) piece.calculateLegalMoves();
+
+        /*
         long totalTime = System.currentTimeMillis() - sTime;
-        //System.out.println("legal moves updated in " + totalTime + "ms");
-    }
-
-    // Changes the alliance of tiles when calculating legal moves
-    public void changeAllianceOnTile(int tilePosition, Side side) {
-        this.board[tilePosition].changeAllianceOnTile(side);
-    }
-
-    public Side getAllianceOnTile(int position) {
-        return this.board[position].getAllianceOnTile();
+        System.out.println("legal moves updated in " + totalTime + "ms");
+        */
     }
 
     public void changePiecePosition(final Move move) {
@@ -166,18 +161,23 @@ public class Board {
         }
     }
 
+    /*
+
     public void visualizeTileAlliance() {
         String[][] board = visualizeBoard(this);
 
-        for (Tile tile : getBoardConfiguration()) {
-            if (tile.getAllianceOnTile() != null) {
-                final int x = getColumnNumber(tile.getTileCoordinate());
-                final int y = getRowNumber(tile.getTileCoordinate());
-                board[y][x] = tile.tileAllianceToString();
+        for (int i = 0; i < 64; i++) {
+            if (sides[i] != null) {
+                final int x = getColumnNumber(i);
+                final int y = getRowNumber(i);
+                board[y][x] = sides[i].toString();
             }
         }
+
         System.out.println(arrayToString(board));
     }
+
+    */
 
     @Override
     public String toString() {
