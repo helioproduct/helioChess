@@ -15,18 +15,18 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashSet;
 
-public class MainFrame implements GraphicConnector, Runnable {
+public class MainFrame implements GraphicConnector {
 
     JFrame frame;
     JPanel gamePanel, board;
     Game game;
 
-    @Override
+    /*@Override
     public void run() {
         drawBoard(game.getBoard());
         drawPieces(game.getBoard().getPieces(Side.BLACK));
         drawPieces(game.getBoard().getPieces(Side.WHITE));
-    }
+    }*/
 
     @Override
     public void init(Game game) {
@@ -159,5 +159,4 @@ public class MainFrame implements GraphicConnector, Runnable {
     public void pauseGame() {
 
     }
-
 }

@@ -1,6 +1,6 @@
 package com.chess.core.game;
 
-import com.chess.core.GUI.MainFrame;
+import com.chess.core.GUI.GUIThread;
 import com.chess.core.board.Board;
 import com.chess.core.game.move.Move;
 import com.chess.core.game.player.BlackPlayer;
@@ -20,9 +20,8 @@ public class Game {
     public Side sideToMove;
 
     private final int hashCode;
-    public final MainFrame mainFrame;
 
-    public int[] activeTilesPositions;
+    public GUIThread GUI;
 
     public boolean isFirstClick = true;
     private Piece activePiece;
@@ -34,13 +33,12 @@ public class Game {
         this.blackPlayer = new BlackPlayer(this);
         this.sideToMove = Side.WHITE;
 
-        this.mainFrame = new MainFrame();
+        this.GUI = new GUIThread(this);
     }
 
     public void run() {
-        mainFrame.init(this);
-        Thread GUI = new Thread(mainFrame, "GUI");
         GUI.start();
+        GUI.showCheckPopup();
     }
 
     public Player getPlayer(Side sideOfPlayer) {
@@ -49,23 +47,14 @@ public class Game {
     }
 
     public void movePiece(Move move) {
-        this.board.changePiecePosition(move);
-        this.mainFrame.movePiece(move.getCurrentPosition(), move.getDestinationPosition());
-        this.isFirstClick = true;
-        this.mainFrame.removeLegalMoves(this.activeTilesPositions);
-    }
-
-    private void showLegalMoves(int[] positions) {
-        if (this.activeTilesPositions != null) {
-            removeLegalMoves();
-        }
-
-        this.mainFrame.showLegalMoves(positions);
-        this.activeTilesPositions = positions;
+        board.changePiecePosition(move);
+        GUI.movePiece(move);
+        isFirstClick = true;
+        GUI.removeLegalMoves();
     }
 
     public void removeLegalMoves() {
-        this.mainFrame.removeLegalMoves(this.activeTilesPositions);
+        this.GUI.removeLegalMoves();
     }
 
     public void handleClick(int tilePosition) {
@@ -74,16 +63,16 @@ public class Game {
         if (isFirstClick) {
             Piece clickedPiece = getBoard().getPiece(tilePosition);
             if (!isNull(clickedPiece) && clickedPiece.getPieceSide().equals(sideToMove)) {
-                showLegalMoves(clickedPiece.getLegalMovesPositions());
-                this.activePiece = clickedPiece;
+                GUI.showLegalMoves(clickedPiece);
+                activePiece = clickedPiece;
                 // Обнулить значение
-                this.isFirstClick = false;
+                isFirstClick = false;
             }
         }
 
         // Пробросить на обработку текущему игроку
         else {
-            this.getPlayer(sideToMove).makeMove(this.activePiece, tilePosition);
+            getPlayer(sideToMove).makeMove(activePiece, tilePosition);
         }
     }
 
@@ -96,6 +85,4 @@ public class Game {
         return this.hashCode;
     }
 }
-
-
 
