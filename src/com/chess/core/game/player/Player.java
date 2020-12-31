@@ -13,51 +13,42 @@ public abstract class Player {
     private final Side side;
     private final King playerKing;
 
+    public boolean isCheck;
+
     public Player(Game game, Side side) {
         this.game = game;
         this.side = side;
         this.playerKing = game.getBoard().getKing(getPlayerAlliance());
+        this.isCheck = false;
     }
 
     public void makeMove(Piece pieceToMove, int destination) {
-        Move move = Move.createMove(pieceToMove, destination, getBoard().getPiece(destination));
-
-        // Player making move
-        if (isMoveLegal(move)) {
-            this.game.movePiece(move);
-            nextMove();
-        }
-        /*
-
-        Something went wrong
-        for e.g. player clicked on the wrong tile or clicked on another Piece
-        -> Player should try new move
-
-        handleClick back to Game.class
-
-        */
-        else {
-            this.game.removeLegalMoves();
-            this.game.isFirstClick = true;
+        if (this.isCheck()) {
+            System.out.println("Do something with that");
+        } else {
+            Move move = Move.createMove(pieceToMove, destination, getBoard().getPiece(destination));
+            if (isMoveLegal(move)) {
+                this.game.movePiece(move);
+                nextMove();
+            } else {
+                this.game.removeLegalMoves();
+                this.game.isFirstClick = true;
+            }
         }
     }
 
-    // Checks if the player is in check
-    public boolean isCheck() {
+    private void handleCheck() {
 
-        int kingPosition = getKing().getPiecePosition();
-        Side sideOnKingTile = getBoard().getAllianceOnTile(kingPosition);
-
-        if (sideOnKingTile == null) return false;
-        return sideOnKingTile.equals(getOpponent().getPlayerAlliance());
     }
 
     public static boolean isMoveLegal(Move move) {
         return move.getMovedPiece().getLegalMoves().contains(move);
     }
 
-    // TODO : CHECK MATE CALCULATION
-    // Передает ход другому игроку, просчитавает шах
+    public boolean isCheck() {
+        return this.isCheck;
+    }
+
     public abstract void nextMove();
 
     public abstract Player getOpponent();

@@ -8,11 +8,12 @@ import com.chess.core.game.player.Player;
 import com.chess.core.game.player.WhitePlayer;
 import com.chess.core.pieces.Piece;
 
+import java.util.Arrays;
+
 import static java.util.Objects.isNull;
 
 public class Game {
 
-    // Game - свзяующее звено для игроков, которое предоставляет им доступ к Board
     private final Board board;
     private final WhitePlayer whitePlayer;
     private final BlackPlayer blackPlayer;
@@ -28,7 +29,7 @@ public class Game {
 
     public Game() {
         this.hashCode = (int) System.currentTimeMillis() * 31;
-        this.board = new Board();
+        this.board = new Board(this);
         this.whitePlayer = new WhitePlayer(this);
         this.blackPlayer = new BlackPlayer(this);
         this.sideToMove = Side.WHITE;
@@ -38,12 +39,15 @@ public class Game {
 
     public void run() {
         GUI.start();
-        GUI.showCheckPopup();
     }
 
     public Player getPlayer(Side sideOfPlayer) {
         if (sideOfPlayer.equals(Side.WHITE)) return this.whitePlayer;
         return this.blackPlayer;
+    }
+
+    public void setCheck(Side sideOnCheck) {
+        getPlayer(sideOnCheck).isCheck = true;
     }
 
     public void movePiece(Move move) {
@@ -63,6 +67,11 @@ public class Game {
         if (isFirstClick) {
             Piece clickedPiece = getBoard().getPiece(tilePosition);
             if (!isNull(clickedPiece) && clickedPiece.getPieceSide().equals(sideToMove)) {
+
+                System.out.println(clickedPiece);
+                for (Move move : clickedPiece.getLegalMoves()) System.out.println(move);
+                System.out.println();
+
                 GUI.showLegalMoves(clickedPiece);
                 activePiece = clickedPiece;
                 // Обнулить значение

@@ -45,4 +45,9 @@ public class King extends Piece {
         return Math.abs(candidatePositionColumn - currentColumn) <= 1 &&
                 Math.abs(candidatePositionRow - currentRow) <= 1;
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

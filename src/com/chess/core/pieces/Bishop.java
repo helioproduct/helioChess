@@ -4,9 +4,7 @@ import com.chess.core.board.Board;
 import com.chess.core.game.Side;
 import com.chess.core.game.move.Move;
 import static com.chess.core.game.move.Move.createMove;
-
 import java.util.HashSet;
-
 import static com.chess.core.service.Converter.*;
 
 public class Bishop extends Piece {
@@ -30,24 +28,22 @@ public class Bishop extends Piece {
             for (int offset = 1; offset < 8; offset++) {
                 int destinationX = x + offset * direction;
                 int destinationY = y + offset * direction;
-
                 Move move;
-
                 if (isValidPosition(destinationX, destinationY)) {
                     int destination = getPosition(destinationX, destinationY);
-
                     // Tile is empty
                     if (!this.getBoard().getTile(destination).isTileOccupied()) {
                         move = createMove(this, destination, null);
-                        getBoard().changeAllianceOnTile(destination, getPieceSide());
                         legalMovesCache.add(move);
                     }
                     // Tile is occupied
                     else {
                         Piece pieceOnTile = getBoard().getPiece(destination);
                         if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
+                            if (pieceOnTile.isKing()) {
+                                this.game.setCheck(pieceOnTile.getPieceSide());
+                            }
                             move = createMove(this, destination, pieceOnTile);
-                            getBoard().changeAllianceOnTile(destination, getPieceSide());
                             legalMovesCache.add(move);
                         } break;
                     }
@@ -58,24 +54,22 @@ public class Bishop extends Piece {
             for (int offset = 1; offset < 8; offset++) {
                 int destinationX = x + offset * direction;
                 int destinationY = y - offset * direction;
-
                 Move move;
-
                 if (isValidPosition(destinationX, destinationY)) {
                     int destination = getPosition(destinationX, destinationY);
-
                     // Tile is empty
                     if (!this.getBoard().getTile(destination).isTileOccupied()) {
                         move = createMove(this, destination, null);
-                        getBoard().changeAllianceOnTile(destination, getPieceSide());
                         legalMovesCache.add(move);
                     }
                     // Tile is occupied
                     else {
                         Piece pieceOnTile = getBoard().getPiece(destination);
                         if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
+                            if (pieceOnTile.isKing()) {
+                                this.game.setCheck(pieceOnTile.getPieceSide());
+                            }
                             move = createMove(this, destination, pieceOnTile);
-                            getBoard().changeAllianceOnTile(destination, getPieceSide());
                             legalMovesCache.add(move);
                         } break;
                     }

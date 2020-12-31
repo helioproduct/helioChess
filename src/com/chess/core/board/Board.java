@@ -1,33 +1,32 @@
 package com.chess.core.board;
 
+import com.chess.core.game.Game;
 import com.chess.core.game.Side;
 import com.chess.core.game.move.Move;
 import com.chess.core.pieces.*;
-
 import static com.chess.core.service.DataVisualizer.visualizeBoard;
 import static com.chess.core.service.DataVisualizer.arrayToString;
-
 import java.util.HashSet;
-
-import static com.chess.core.service.Converter.getRowNumber;
-import static com.chess.core.service.Converter.getColumnNumber;
 
 public class Board {
     private final Tile[] board;
+    public final Game game;
 
     private King whiteKing;
     private King blackKing;
-    
+
     private HashSet<Piece> currentWhitePieces = new HashSet<>();
     private HashSet<Piece> currentBlackPieces = new HashSet<>();
 
-    public Board() {
+    public Board(Game game) {
+        this.game = game;
         this.board = createEmptyBoard();
         spawnPieces();
         updateLegalMoves(Side.WHITE);
     }
 
-    public Board(Tile[] boardConfiguration) {
+    public Board(Game game, Tile[] boardConfiguration) {
+        this.game = game;
         this.board = boardConfiguration;
         updateLegalMoves(Side.WHITE);
     }
@@ -42,7 +41,7 @@ public class Board {
         return this.board[position];
     }
 
-    public Piece getPiece(int position)  {
+    public Piece getPiece(int position) {
         return this.board[position].getPiece();
     }
 
@@ -54,8 +53,9 @@ public class Board {
 
     public void removePiece(int position) {
         final Piece pieceToRemove = this.getPiece(position);
-        if (pieceToRemove.getPieceSide().equals(Side.WHITE)) this.currentWhitePieces.remove(pieceToRemove);
-        else this.currentBlackPieces.remove(pieceToRemove);
+        if (pieceToRemove.getPieceSide().equals(Side.WHITE)) {
+            this.currentWhitePieces.remove(pieceToRemove);
+        } else this.currentBlackPieces.remove(pieceToRemove);
         board[position].clearTile();
     }
 
@@ -70,25 +70,13 @@ public class Board {
     }
 
     public void updateLegalMoves(Side side) {
-        long sTime = System.currentTimeMillis();
         for (Piece piece : getPieces(side)) piece.calculateLegalMoves();
-        long totalTime = System.currentTimeMillis() - sTime;
-        //System.out.println("legal moves updated in " + totalTime + "ms");
-    }
-
-    // Changes the alliance of tiles when calculating legal moves
-    public void changeAllianceOnTile(int tilePosition, Side side) {
-        this.board[tilePosition].changeAllianceOnTile(side);
-    }
-
-    public Side getAllianceOnTile(int position) {
-        return this.board[position].getAllianceOnTile();
     }
 
     public void changePiecePosition(final Move move) {
         final Piece pieceToMove = move.getMovedPiece();
         pieceToMove.changePiecePosition(move);
-        pieceToMove.increaseNumberOfMoves();
+        pieceToMove.increaseMovesAmount();
 
         this.removePiece(move.getCurrentPosition());
         this.setPiece(move.getDestinationPosition(), pieceToMove);
@@ -133,7 +121,7 @@ public class Board {
         setPiece(52, new Pawn(this, 52, Side.WHITE));
         setPiece(53, new Pawn(this, 53, Side.WHITE));
         setPiece(54, new Pawn(this, 54, Side.WHITE));
-        setPiece(55, new Pawn(this ,55, Side.WHITE));
+        setPiece(55, new Pawn(this, 55, Side.WHITE));
 
         // Saving kings
         this.blackKing = (King) this.getPiece(4);
@@ -144,43 +132,9 @@ public class Board {
         return this.board;
     }
 
-    public void clearBoard() {
-        for (int i = 0; i < 64; i++) this.board[i].clearTile();
-        this.currentBlackPieces = new HashSet<>();
-        this.currentWhitePieces = new HashSet<>();
-    }
-
-    public void visualizeLegalMoves(final int piecePosition) {
-        String[][] board = visualizeBoard(this);
-        try {
-            final Piece piece = this.getTile(piecePosition).getPiece();
-            for (Move move : piece.getLegalMoves()) {
-                final int x = getColumnNumber(move.getDestinationPosition());
-                final int y = getRowNumber(move.getDestinationPosition());
-                board[y][x] = "*";
-            }
-            System.out.println(arrayToString(board));
-
-        } catch (NullPointerException nullPointerException) {
-            // Piece is null there no legal moves for it
-        }
-    }
-
-    public void visualizeTileAlliance() {
-        String[][] board = visualizeBoard(this);
-
-        for (Tile tile : getBoardConfiguration()) {
-            if (tile.getAllianceOnTile() != null) {
-                final int x = getColumnNumber(tile.getTileCoordinate());
-                final int y = getRowNumber(tile.getTileCoordinate());
-                board[y][x] = tile.tileAllianceToString();
-            }
-        }
-        System.out.println(arrayToString(board));
-    }
-
     @Override
     public String toString() {
         return arrayToString(visualizeBoard(this));
     }
 }
+
