@@ -13,10 +13,13 @@ public abstract class Player {
     private final Side side;
     private final King playerKing;
 
+    public boolean isCheck;
+
     public Player(Game game, Side side) {
         this.game = game;
         this.side = side;
         this.playerKing = game.getBoard().getKing(getPlayerAlliance());
+        this.isCheck = false;
     }
 
     public void makeMove(Piece pieceToMove, int destination) {
@@ -38,7 +41,7 @@ public abstract class Player {
 
         */
         else {
-            this.game.removeLegalMoves();
+            this.game.GUI.removeLegalMoves();
             this.game.isFirstClick = true;
         }
     }
@@ -47,8 +50,10 @@ public abstract class Player {
         return move.getMovedPiece().getLegalMoves().contains(move);
     }
 
-    // TODO : CHECK MATE CALCULATION
-    // Передает ход другому игроку, просчитавает шах
+    public boolean isCheck() {
+        return this.isCheck;
+    }
+
     public abstract void nextMove();
 
     public abstract Player getOpponent();
