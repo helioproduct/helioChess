@@ -76,7 +76,7 @@ public class MainFrame implements GraphicConnector, Runnable {
 
     private Image getPieceImage(Piece piece) {
         Color pieceColor = piece.getColor();
-        String pieceName = piece.getPieceName();
+        String pieceName = piece.getClass().getSimpleName();
         String imagePath, color;
 
         if (pieceColor == Color.WHITE) {

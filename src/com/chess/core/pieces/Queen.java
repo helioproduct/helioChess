@@ -45,11 +45,13 @@ public class Queen extends Piece {
                 }
                 // Tile is Occupied
                 else {
-                    Piece piece = getBoard().getTile(position).getPiece();
+                    Piece pieceOnTile = getBoard().getTile(position).getPiece();
                     // Break when tile is Occupied by the same Alliance
-                    if (!piece.getPieceSide().equals(this.getPieceSide())) {
-                        move = createMove(this, position, piece);
-
+                    if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
+                        if (pieceOnTile.isKing()) {
+                            this.game.setCheck(pieceOnTile.getPieceSide());
+                        }
+                        move = createMove(this, position, pieceOnTile);
                         legalMovesCache.add(move);
                     }
                     break;
@@ -104,8 +106,10 @@ public class Queen extends Piece {
                     else {
                         Piece pieceOnTile = getBoard().getPiece(destination);
                         if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
+                            if (pieceOnTile.isKing()) {
+                                this.game.setCheck(pieceOnTile.getPieceSide());
+                            }
                             move = createMove(this, destination, pieceOnTile);
-
                             legalMovesCache.add(move);
                         } break;
                     }

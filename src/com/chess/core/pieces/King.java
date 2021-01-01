@@ -29,6 +29,7 @@ public class King extends Piece {
                     legalMovesCache.add(createMove(this, destination, null));
                 } else if (!getBoard().getTile(destination).getPiece().getPieceSide().equals(this.getPieceSide())){
                     Piece pieceOnTile = getBoard().getPiece(destination);
+                    // TODO: do something here
                     legalMovesCache.add(createMove(this, destination, pieceOnTile));
                 }
             }
@@ -44,5 +45,10 @@ public class King extends Piece {
 
         return Math.abs(candidatePositionColumn - currentColumn) <= 1 &&
                 Math.abs(candidatePositionRow - currentRow) <= 1;
+    }
+
+    @Override
+    public boolean isKing() {
+        return true;
     }
 }

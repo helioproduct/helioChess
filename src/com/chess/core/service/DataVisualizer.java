@@ -8,13 +8,13 @@ import static com.chess.core.service.Converter.getRowNumber;
 public class DataVisualizer {
 
     public static String arrayToString(String[] array) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < array.length; i++) {
-            result += array[i];
-            if (i == array.length - 1) result += "\n";
-            else result += " ";
+            result.append(array[i]);
+            if (i == array.length - 1) result.append("\n");
+            else result.append(" ");
         }
-        return result;
+        return result.toString();
     }
 
     public static String arrayToString(String[][] twoDimensionalArray) {

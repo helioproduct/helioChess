@@ -25,10 +25,12 @@ public class Knight extends Piece {
             if (isValidPosition(destination) && isValidColumn(getPiecePosition(), destination)) {
                 Move move;
                 if (getBoard().getTile(destination).isTileOccupied()) {
-                    Piece piece = getBoard().getTile(destination).getPiece();
-                    if (!piece.getPieceSide().equals(this.getPieceSide())) {
-                        move = createMove(this, destination, piece);
-
+                    Piece pieceOnTile = getBoard().getTile(destination).getPiece();
+                    if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
+                        move = createMove(this, destination, pieceOnTile);
+                        if (pieceOnTile.isKing()) {
+                            this.game.setCheck(pieceOnTile.getPieceSide());
+                        }
                         legalMovesCache.add(move);
                     }
                 }
@@ -38,7 +40,6 @@ public class Knight extends Piece {
                     legalMovesCache.add(move);
                 }
             }
-            // Переопределение ссылки
         } this.legalMoves = legalMovesCache;
     }
 

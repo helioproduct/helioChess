@@ -23,26 +23,23 @@ public abstract class Player {
     }
 
     public void makeMove(Piece pieceToMove, int destination) {
-        Move move = Move.createMove(pieceToMove, destination, getBoard().getPiece(destination));
 
-        // Player making move
-        if (isMoveLegal(move)) {
-            this.game.movePiece(move);
-            nextMove();
-        }
-
-        /*
-
-        Something went wrong
-        for e.g. player clicked on the wrong tile or clicked on another Piece
-        -> Player should try new move
-
-        handleClick back to Game.class
-
-        */
-        else {
-            this.game.GUI.removeLegalMoves();
-            this.game.isFirstClick = true;
+        if (this.isCheck()) {
+            System.out.println("do something with that");
+        } else {
+            Move move = Move.createMove(pieceToMove, destination, getBoard().getPiece(destination));
+            // Player making move
+            if (isMoveLegal(move)) {
+                this.game.movePiece(move);
+                nextMove();
+            } else {
+            /*
+                Something went wrong -> Player should try new move.
+                handleClick back to Game.class
+            */
+                this.game.GUI.removeLegalMoves();
+                this.game.isFirstClick = true;
+            }
         }
     }
 

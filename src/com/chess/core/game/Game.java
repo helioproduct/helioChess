@@ -27,7 +27,7 @@ public class Game {
 
     public Game() {
         this.hashCode = (int) System.currentTimeMillis() * 31;
-        this.board = new Board();
+        this.board = new Board(this);
         this.whitePlayer = new WhitePlayer(this);
         this.blackPlayer = new BlackPlayer(this);
         this.sideToMove = Side.WHITE;
@@ -56,8 +56,7 @@ public class Game {
     }
 
     public void handleClick(int tilePosition) {
-
-        // Показать активные клетки, если нажатие первое
+        // Show legal moves if click is first
         if (isFirstClick) {
             Piece clickedPiece = getBoard().getPiece(tilePosition);
             if (!isNull(clickedPiece) && clickedPiece.getPieceSide().equals(sideToMove)) {
@@ -67,7 +66,7 @@ public class Game {
             }
         }
 
-        // Пробросить на обработку текущему игроку
+        // Forward for processing to the current player
         else {
             getPlayer(sideToMove).makeMove(this.activePiece, tilePosition);
         }

@@ -1,6 +1,7 @@
 package com.chess.core.pieces;
 
 import com.chess.core.board.Board;
+import com.chess.core.game.Game;
 import com.chess.core.game.Side;
 import com.chess.core.game.move.Move;
 
@@ -9,26 +10,25 @@ import java.util.HashSet;
 
 public abstract class Piece {
 
+    protected final Game game;
     private final Board board;
 
     private int position;
     private final Side side;
-    private final String pieceName;
 
-    // LegalMoves
     protected HashSet<Move> legalMoves = new HashSet<>(32);
 
-    private int numberOfMoves = 0;
+    private int movesAmount = 0;
     private final int cachedHashCode;
 
-    // GUI
     private final Color color;
 
     public Piece(Board board, int position, Side side) {
         this.board = board;
+        this.game = board.game;
+
         this.position = position;
         this.side = side;
-        this.pieceName = this.getClass().getSimpleName();
 
         this.cachedHashCode = calculateHashCode();
 
@@ -42,26 +42,26 @@ public abstract class Piece {
         this.position = move.getDestinationPosition();
     }
 
-    public int getNumberOfMoves() {
-        return this.numberOfMoves;
+    public int getMovesAmount() {
+        return this.movesAmount;
     }
 
-    public void increaseNumberOfMoves() {
-        this.numberOfMoves += 1;
+    public void increaseMovesAmount() {
+        this.movesAmount += 1;
     }
 
     public Board getBoard() {
         return this.board;
     }
+
     public int getPiecePosition() {
         return this.position;
     }
-    public String getPieceName() {
-        return this.pieceName;
-    }
+
     public Side getPieceSide() {
         return this.side;
     }
+
     public HashSet<Move> getLegalMoves() {
         return this.legalMoves;
     }
@@ -70,7 +70,7 @@ public abstract class Piece {
         int hash = 1;
         if (this.getPieceSide().equals(Side.WHITE)) hash *= 11;
         else hash *= 31;
-        hash += this.pieceName.hashCode();
+        hash += this.getClass().getSimpleName().hashCode();
         return hash;
     }
 
@@ -86,8 +86,10 @@ public abstract class Piece {
 
     @Override
     public String toString() {
-        if (getPieceSide().equals(Side.WHITE)) return String.valueOf(this.getPieceName().toCharArray()[0]);
-        return String.valueOf(this.getPieceName().toCharArray()[0]).toLowerCase();
+        if (getPieceSide().equals(Side.WHITE)) {
+            return String.valueOf(getClass().getSimpleName().toCharArray()[0]);
+        }
+        return String.valueOf(getClass().getSimpleName().toCharArray()[0]).toLowerCase();
     }
 
     @Override
@@ -95,8 +97,11 @@ public abstract class Piece {
         return this.cachedHashCode;
     }
 
-    // GUI
     public Color getColor() {
         return this.color;
+    }
+
+    public boolean isKing() {
+        return false;
     }
 }

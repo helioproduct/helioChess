@@ -18,7 +18,6 @@ public class Pawn extends Piece {
 
     @Override
     public void calculateLegalMoves() {
-
         HashSet<Move> legalMovesCache = new HashSet<>(6);
 
         int classicOffset = 8 * getDirection();
@@ -61,10 +60,12 @@ public class Pawn extends Piece {
         int destination = getPiecePosition() + attackOffsetLeft;
 
         if (isValidPosition(destination) && isValidColumn(destination)) {
-
             if (getBoard().getTile(destination).isTileOccupied()) {
                 Piece pieceOnTile = getBoard().getPiece(destination);
                 if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
+                    if (pieceOnTile.isKing()) {
+                        this.game.setCheck(pieceOnTile.getPieceSide());
+                    }
                     attackMoveCache.add(createMove(this, destination, pieceOnTile));
                 }
             }
@@ -73,11 +74,12 @@ public class Pawn extends Piece {
         // Right-Attack move
         destination = getPiecePosition() + attackOffsetRight;
         if (isValidPosition(destination) && isValidColumn(destination)) {
-
-
             if (getBoard().getTile(destination).isTileOccupied()) {
                 Piece pieceOnTile = getBoard().getPiece(destination);
                 if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
+                    if (pieceOnTile.isKing()) {
+                        this.game.setCheck(pieceOnTile.getPieceSide());
+                    }
                     attackMoveCache.add(createMove( this, destination, pieceOnTile));
                 }
             }
