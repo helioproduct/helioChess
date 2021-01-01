@@ -25,7 +25,12 @@ public abstract class Player {
     public void makeMove(Piece pieceToMove, int destination) {
 
         if (this.isCheck()) {
-            System.out.println("do something with that");
+            // 1) TODO: занулить threats in Game.class
+            // 2) TODO: алгоритм просчета ходов для короля
+            // 3) TODO: алгоритм поиска фигуры для защиты короля
+            // 4) TODO: алгоритм поиска фигуры, ликвидирущей угрозы
+
+            System.out.println(this.game.checkBy + " do something with that");
         } else {
             Move move = Move.createMove(pieceToMove, destination, getBoard().getPiece(destination));
             // Player making move

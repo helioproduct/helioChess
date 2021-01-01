@@ -25,13 +25,14 @@ public class Game {
     public boolean isFirstClick = true;
     private Piece activePiece;
 
+    public Piece checkBy;
+
     public Game() {
         this.hashCode = (int) System.currentTimeMillis() * 31;
         this.board = new Board(this);
         this.whitePlayer = new WhitePlayer(this);
         this.blackPlayer = new BlackPlayer(this);
         this.sideToMove = Side.WHITE;
-
         this.GUI = new GUIThread(this);
     }
 
@@ -46,6 +47,10 @@ public class Game {
 
     public void setCheck(Side sideOnCheck) {
         this.getPlayer(sideOnCheck).isCheck = true;
+    }
+
+    public void setPieceCheckBy(Piece piece) {
+        this.checkBy = piece;
     }
 
     public void movePiece(Move move) {

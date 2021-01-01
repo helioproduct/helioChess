@@ -3,6 +3,8 @@ package com.chess.core.pieces;
 import com.chess.core.board.Board;
 import com.chess.core.game.Side;
 import com.chess.core.game.move.Move;
+import com.chess.core.service.Converter;
+
 import static com.chess.core.service.Converter.getRowNumber;
 import static com.chess.core.service.Converter.getColumnNumber;
 import static com.chess.core.game.move.Move.createMove;
@@ -14,31 +16,24 @@ public class Rook extends Piece {
         super(board, piecePosition, side);
     }
 
-    private final int[] OFFSETS = {-8, 8, -1, 1};
-
-    // TODO : FIX METHOD
     public void calculateLegalMoves() {
         HashSet<Move> legalMovesCache = new HashSet<>(16);
+        final int[] OFFSETS = {-8, 8, -1, 1};
+
         for (int offset : OFFSETS) {
             int position = this.getPiecePosition();
-            int stepsCount = 1;
-
-            while (isValidPosition(this.getPiecePosition(), position + offset) && stepsCount < 8) {
+            int i = 1;
+            while (isValidPosition(position, position + offset) && i < 8) {
                 position += offset;
-                stepsCount++;
-                Move move;
-
-                // Tile is Empty
-                if (!getBoard().getTile(position).isTileOccupied()) {
-                    move = createMove(this, position, null);
+                i++;
+                if (!this.getBoard().getTile(position).isTileOccupied()) {
+                    Move move = createMove(this, position, null);
                     legalMovesCache.add(move);
-                }
-                // Tile is Occupied
-                else {
-                    Piece piece = getBoard().getTile(position).getPiece();
-                    // Break when tile is Occupied by the same Alliance
-                    if (!piece.getPieceSide().equals(this.getPieceSide())) {
-                        move = createMove(this, position, piece);
+                } else {
+                    Piece pieceOnTile = this.getBoard().getPiece(position);
+                    if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
+                        if (pieceOnTile.isKing()) setCheck();
+                        Move move = createMove(this, position, pieceOnTile);
                         legalMovesCache.add(move);
                     }
                     break;
@@ -48,7 +43,8 @@ public class Rook extends Piece {
     }
 
     public static boolean isValidPosition(int currentPosition, int candidatePosition) {
-        return getColumnNumber(currentPosition) == getColumnNumber(candidatePosition) ||
-        getRowNumber(currentPosition) == getRowNumber(candidatePosition);
+        boolean firstCondition = getColumnNumber(currentPosition) == getColumnNumber(candidatePosition);
+        boolean secondCondition = getRowNumber(currentPosition) == getRowNumber(candidatePosition);
+        return (firstCondition || secondCondition) && Converter.isValidPosition(candidatePosition);
     }
 }

@@ -66,6 +66,12 @@ public abstract class Piece {
         return this.legalMoves;
     }
 
+    // Safe method for setting check
+    public void setCheck() {
+        this.game.setCheck(this.getPieceSide().invert());
+        this.game.setPieceCheckBy(this);
+    }
+
     private int calculateHashCode() {
         int hash = 1;
         if (this.getPieceSide().equals(Side.WHITE)) hash *= 11;

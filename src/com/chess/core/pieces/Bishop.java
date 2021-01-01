@@ -38,9 +38,7 @@ public class Bishop extends Piece {
                     else {
                         Piece pieceOnTile = getBoard().getPiece(destination);
                         if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
-                            if (pieceOnTile.isKing()) {
-                                this.game.setCheck(pieceOnTile.getPieceSide());
-                            }
+                            if (pieceOnTile.isKing()) setCheck();
                             move = createMove(this, destination, pieceOnTile);
                             legalMovesCache.add(move);
                         } break;
@@ -64,9 +62,7 @@ public class Bishop extends Piece {
                     else {
                         Piece pieceOnTile = getBoard().getPiece(destination);
                         if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
-                            if (pieceOnTile.isKing()) {
-                                this.game.setCheck(pieceOnTile.getPieceSide());
-                            }
+                            if (pieceOnTile.isKing()) setCheck();
                             move = createMove(this, destination, pieceOnTile);
                             legalMovesCache.add(move);
                         } break;

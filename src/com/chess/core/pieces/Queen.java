@@ -99,16 +99,13 @@ public class Queen extends Piece {
                     // Tile is empty
                     if (!this.getBoard().getTile(destination).isTileOccupied()) {
                         move = createMove(this, destination, null);
-
                         legalMovesCache.add(move);
                     }
                     // Tile is occupied
                     else {
                         Piece pieceOnTile = getBoard().getPiece(destination);
                         if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
-                            if (pieceOnTile.isKing()) {
-                                this.game.setCheck(pieceOnTile.getPieceSide());
-                            }
+                            if (pieceOnTile.isKing()) setCheck();
                             move = createMove(this, destination, pieceOnTile);
                             legalMovesCache.add(move);
                         } break;

@@ -63,9 +63,7 @@ public class Pawn extends Piece {
             if (getBoard().getTile(destination).isTileOccupied()) {
                 Piece pieceOnTile = getBoard().getPiece(destination);
                 if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
-                    if (pieceOnTile.isKing()) {
-                        this.game.setCheck(pieceOnTile.getPieceSide());
-                    }
+                    if (pieceOnTile.isKing()) setCheck();
                     attackMoveCache.add(createMove(this, destination, pieceOnTile));
                 }
             }
@@ -77,9 +75,7 @@ public class Pawn extends Piece {
             if (getBoard().getTile(destination).isTileOccupied()) {
                 Piece pieceOnTile = getBoard().getPiece(destination);
                 if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
-                    if (pieceOnTile.isKing()) {
-                        this.game.setCheck(pieceOnTile.getPieceSide());
-                    }
+                    if (pieceOnTile.isKing()) setCheck();
                     attackMoveCache.add(createMove( this, destination, pieceOnTile));
                 }
             }

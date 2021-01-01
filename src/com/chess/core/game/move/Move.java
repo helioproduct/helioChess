@@ -36,8 +36,8 @@ public abstract class Move {
 
     private int calculateHashCode() {
         int hash = 1;
-        hash *= currentPosition;
-        hash *= destinationPosition;
+        hash *= (currentPosition + 1);
+        hash *= (destinationPosition + 1);
         hash += movedPiece.hashCode();
         return hash;
     }

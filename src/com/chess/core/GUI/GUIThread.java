@@ -51,6 +51,9 @@ public class GUIThread extends Thread {
     public void showCheckPopup() {
         this.mainFrame.showCheckPopup();
     }
+    public void showCheckPopup(Piece threat) {
+        this.mainFrame.showCheckPopup(threat.getClass().getSimpleName());
+    }
     public void showCheckMatePopup() {
         this.mainFrame.showCheckMatePopup();
     }

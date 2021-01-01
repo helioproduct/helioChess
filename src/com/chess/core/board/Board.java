@@ -4,8 +4,10 @@ import com.chess.core.game.Game;
 import com.chess.core.game.Side;
 import com.chess.core.game.move.Move;
 import com.chess.core.pieces.*;
+
 import static com.chess.core.service.DataVisualizer.visualizeBoard;
 import static com.chess.core.service.DataVisualizer.arrayToString;
+
 import java.util.HashSet;
 
 public class Board {
