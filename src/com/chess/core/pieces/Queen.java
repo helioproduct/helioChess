@@ -48,6 +48,15 @@ public class Queen extends Piece {
                     // Break when tile is Occupied by the same Alliance
                     if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
                         if (pieceOnTile.isKing()) setCheck();
+                        else {
+                            int nextPosition = position + offset;
+                            if (isValidPosition(this.getPiecePosition(), nextPosition)) {
+                                Piece nextPiece = getBoard().getPiece(nextPosition);
+                                if (nextPiece != null && nextPiece.isKing()) {
+                                    pieceOnTile.setDefends(this, -offset);
+                                }
+                            }
+                        }
                         move = createMove(this, position, pieceOnTile);
                         legalMovesCache.add(move);
                     }
@@ -61,7 +70,7 @@ public class Queen extends Piece {
             int x = getColumnNumber(getPiecePosition());
             int y = getRowNumber(getPiecePosition());
 
-            // Negative diagonal
+            // Negative diagonal (-45deg)
             for (int offset = 1; offset < 8; offset++) {
                 int destinationX = x + offset * direction;
                 int destinationY = y + offset * direction;
@@ -71,7 +80,6 @@ public class Queen extends Piece {
                     // Tile is Empty
                     if (!this.getBoard().getTile(destination).isTileOccupied()) {
                         move = createMove(this, destination, null);
-
                         legalMovesCache.add(move);
                     }
                     // Tile is Occupied
@@ -79,6 +87,18 @@ public class Queen extends Piece {
                         Piece pieceOnTile = getBoard().getPiece(destination);
                         if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
                             if (pieceOnTile.isKing()) setCheck();
+                            else {
+
+                                int nextPosition = destination + 9 * direction;
+                                if (isSameDiagonal(getPiecePosition(), nextPosition)) {
+                                    Piece nextPiece = getBoard().getPiece(nextPosition);
+                                    if (nextPiece != null && nextPiece.isKing()) {
+                                        int legalOffset = 9 * direction;
+                                        pieceOnTile.setDefends(this, -legalOffset);
+                                    }
+                                }
+
+                            }
                             move = createMove(this, destination, pieceOnTile);
                             legalMovesCache.add(move);
                         } break;
@@ -86,7 +106,7 @@ public class Queen extends Piece {
                 }
             }
 
-            // Positive diagonal
+            // Positive diagonal (45deg, offset = 7)
             for (int offset = 1; offset < 8; offset++) {
                 int destinationX = x + offset * direction;
                 int destinationY = y - offset * direction;
@@ -103,6 +123,18 @@ public class Queen extends Piece {
                         Piece pieceOnTile = getBoard().getPiece(destination);
                         if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
                             if (pieceOnTile.isKing()) setCheck();
+                            else {
+
+                                int nextPosition = destination - 7 * direction;
+                                if (isSameDiagonal(getPiecePosition(), nextPosition)) {
+                                    Piece nextPiece = getBoard().getPiece(nextPosition);
+                                    if (nextPiece != null && nextPiece.isKing()) {
+                                        int legalOffset = 7 * direction;
+                                        pieceOnTile.setDefends(this, legalOffset);
+                                    }
+                                }
+
+                            }
                             move = createMove(this, destination, pieceOnTile);
                             legalMovesCache.add(move);
                         } break;

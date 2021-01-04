@@ -15,6 +15,8 @@ public abstract class Piece {
 
     private int position;
     private final Side side;
+    private boolean isDefends = false;
+    private HashSet<Piece> threats = new HashSet<>();
 
     protected HashSet<Move> legalMoves = new HashSet<>(32);
 
@@ -96,6 +98,16 @@ public abstract class Piece {
             return String.valueOf(getClass().getSimpleName().toCharArray()[0]);
         }
         return String.valueOf(getClass().getSimpleName().toCharArray()[0]).toLowerCase();
+    }
+
+    public void setDefends(Piece threat, int legalOffset) {
+        System.out.println(this + " defends King from " + threat +  " // legalOffset: "  + legalOffset);
+        this.isDefends = true;
+    }
+
+    public void removeThreat(Piece threat) {
+        this.threats.remove(threat);
+        if (this.threats.size() == 0) this.isDefends = false;
     }
 
     @Override
