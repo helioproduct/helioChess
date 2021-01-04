@@ -155,6 +155,11 @@ public class MainFrame implements GraphicConnector, Runnable {
     }
 
     @Override
+    public void showSelectPiecePopup() {
+        // TODO : Реализация
+    }
+
+    @Override
     public void timeEndPopup(Game game) {
 
     }

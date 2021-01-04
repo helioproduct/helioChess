@@ -20,6 +20,9 @@ public interface GraphicConnector {
 
     void showCheckPopup();
     void showCheckMatePopup();
+
+
+    void showSelectPiecePopup();
     void timeEndPopup(Game game);
     void pauseGame();
 

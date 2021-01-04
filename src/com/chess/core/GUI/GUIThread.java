@@ -1,6 +1,5 @@
 package com.chess.core.GUI;
 
-
 import com.chess.core.game.Game;
 import com.chess.core.game.Side;
 import com.chess.core.game.move.Move;
