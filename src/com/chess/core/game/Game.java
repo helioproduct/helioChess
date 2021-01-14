@@ -110,4 +110,8 @@ public class Game {
     public void showCheckPopup(Piece threat) {
         this.mainFrame.showCheckPopup(threat.getClass().getSimpleName());
     }
+
+    public void showCheckMatePopup(Player player) {
+        this.mainFrame.showCheckMatePopup(player.toString());
+    }
 }

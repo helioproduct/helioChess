@@ -149,6 +149,10 @@ public class MainFrame implements GraphicConnector, Runnable {
         JOptionPane.showMessageDialog(frame, "Check by " + threatName + " !", "Message", JOptionPane.WARNING_MESSAGE);
     }
 
+    public void showCheckMatePopup(String playerName) {
+        JOptionPane.showMessageDialog(frame, "Check Mate! " + playerName + " won.", "Message", JOptionPane.ERROR_MESSAGE);
+    }
+
     @Override
     public void showCheckMatePopup() {
         JOptionPane.showMessageDialog(frame, "Check Mate!", "Message", JOptionPane.ERROR_MESSAGE);
@@ -168,5 +172,4 @@ public class MainFrame implements GraphicConnector, Runnable {
     public void pauseGame() {
 
     }
-
 }
