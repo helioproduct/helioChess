@@ -1,6 +1,6 @@
 package com.chess.core.game;
 
-import com.chess.core.GUI.GUIThread;
+import com.chess.core.GUI.MainFrame;
 import com.chess.core.board.Board;
 import com.chess.core.game.move.Move;
 import com.chess.core.game.player.BlackPlayer;
@@ -18,14 +18,13 @@ public class Game {
 
     public Side sideToMove;
 
-    private final int hashCode;
-
-    public GUIThread GUI;
-
     public boolean isFirstClick = true;
     private Piece activePiece;
 
+    // TODO : Delete this bullshit
     public Piece checkBy;
+
+    private final int hashCode;
 
     public Game() {
         this.hashCode = (int) System.currentTimeMillis() * 31;
@@ -33,11 +32,15 @@ public class Game {
         this.whitePlayer = new WhitePlayer(this);
         this.blackPlayer = new BlackPlayer(this);
         this.sideToMove = Side.WHITE;
-        this.GUI = new GUIThread(this);
+
+        this.mainFrame = new MainFrame();
+        this.mainFrame.init(this);
     }
 
     public void run() {
-        GUI.start();
+        this.mainFrame.drawBoard(getBoard());
+        this.mainFrame.drawPieces(getBoard().getPieces(Side.BLACK));
+        this.mainFrame.drawPieces(getBoard().getPieces(Side.WHITE));
     }
 
     public Player getPlayer(Side sideOfPlayer) {
@@ -55,9 +58,10 @@ public class Game {
 
     public void movePiece(Move move) {
         this.board.changePiecePosition(move);
-        this.GUI.movePiece(move);
+
+        this.mainFrame.movePiece(move.getCurrentPosition(), move.getDestinationPosition());
         this.isFirstClick = true;
-        this.GUI.removeLegalMoves();
+        removeLegalMoves();
     }
 
     public void handleClick(int tilePosition) {
@@ -65,7 +69,7 @@ public class Game {
         if (isFirstClick) {
             Piece clickedPiece = getBoard().getPiece(tilePosition);
             if (!isNull(clickedPiece) && clickedPiece.getPieceSide().equals(sideToMove)) {
-                GUI.showLegalMoves(clickedPiece);
+                showLegalMoves(clickedPiece);
                 activePiece = clickedPiece;
                 isFirstClick = false;
             }
@@ -84,5 +88,26 @@ public class Game {
     @Override
     public int hashCode() {
         return this.hashCode;
+    }
+
+
+    // GUI Safe methods!
+
+    private final MainFrame mainFrame;
+    private int[] activeTilesPositions;
+
+    public void showLegalMoves(Piece piece) {
+        if (this.activeTilesPositions != null) removeLegalMoves();
+        this.mainFrame.showLegalMoves(piece.getLegalMovesPositions());
+        this.activeTilesPositions = piece.getLegalMovesPositions();
+    }
+
+    public void removeLegalMoves() {
+        this.mainFrame.removeLegalMoves(this.activeTilesPositions);
+    }
+
+    // Messages
+    public void showCheckPopup(Piece threat) {
+        this.mainFrame.showCheckPopup(threat.getClass().getSimpleName());
     }
 }

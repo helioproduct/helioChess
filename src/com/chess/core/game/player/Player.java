@@ -42,7 +42,7 @@ public abstract class Player {
                 Something went wrong -> Player should try new move.
                 handleClick back to Game.class
             */
-                this.game.GUI.removeLegalMoves();
+                this.game.removeLegalMoves();
                 this.game.isFirstClick = true;
             }
         }
