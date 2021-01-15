@@ -49,11 +49,12 @@ public class Queen extends Piece {
                     if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
                         if (pieceOnTile.isKing()) setCheck();
                         else {
+                            // Check if the next piece is a king
                             int nextPosition = position + offset;
                             if (isValidPosition(this.getPiecePosition(), nextPosition)) {
                                 Piece nextPiece = getBoard().getPiece(nextPosition);
                                 if (nextPiece != null && nextPiece.isKing()) {
-                                    pieceOnTile.setDefends(this, -offset);
+                                    pieceOnTile.block(this, -offset);
                                 }
                             }
                         }
@@ -88,16 +89,14 @@ public class Queen extends Piece {
                         if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
                             if (pieceOnTile.isKing()) setCheck();
                             else {
-
+                                // Check if the next piece is a kin
                                 int nextPosition = destination + 9 * direction;
                                 if (isSameDiagonal(getPiecePosition(), nextPosition)) {
                                     Piece nextPiece = getBoard().getPiece(nextPosition);
                                     if (nextPiece != null && nextPiece.isKing()) {
-                                        int legalOffset = 9 * direction;
-                                        pieceOnTile.setDefends(this, -legalOffset);
+                                        pieceOnTile.block(this, -9 * direction);
                                     }
                                 }
-
                             }
                             move = createMove(this, destination, pieceOnTile);
                             legalMovesCache.add(move);
@@ -124,16 +123,14 @@ public class Queen extends Piece {
                         if (!pieceOnTile.getPieceSide().equals(this.getPieceSide())) {
                             if (pieceOnTile.isKing()) setCheck();
                             else {
-
+                                // Check if the next piece is a king
                                 int nextPosition = destination - 7 * direction;
                                 if (isSameDiagonal(getPiecePosition(), nextPosition)) {
                                     Piece nextPiece = getBoard().getPiece(nextPosition);
                                     if (nextPiece != null && nextPiece.isKing()) {
-                                        int legalOffset = 7 * direction;
-                                        pieceOnTile.setDefends(this, legalOffset);
+                                        pieceOnTile.block(this, 7 * direction);
                                     }
                                 }
-
                             }
                             move = createMove(this, destination, pieceOnTile);
                             legalMovesCache.add(move);

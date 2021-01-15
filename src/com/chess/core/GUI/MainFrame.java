@@ -158,6 +158,10 @@ public class MainFrame implements GraphicConnector, Runnable {
         JOptionPane.showMessageDialog(frame, "Check Mate!", "Message", JOptionPane.ERROR_MESSAGE);
     }
 
+    public void showCustomPopup(String message) {
+        JOptionPane.showMessageDialog(frame, message, "Message", JOptionPane.ERROR_MESSAGE);
+    }
+
     @Override
     public void showSelectPiecePopup() {
         // TODO : Реализация

@@ -15,10 +15,13 @@ public abstract class Piece {
 
     private int position;
     private final Side side;
-    private boolean isDefends = false;
-    private HashSet<Piece> threats = new HashSet<>();
 
     protected HashSet<Move> legalMoves = new HashSet<>(32);
+
+    /*
+    If a piece is blocked, then it can move only without subjecting the king to check
+    */
+    private HashSet<Integer> legalOffsets = new HashSet<>();
 
     private int movesAmount = 0;
     private final int cachedHashCode;
@@ -92,22 +95,18 @@ public abstract class Piece {
         return positions;
     }
 
+    public void block(Piece threat, int legalOffset) {
+        this.legalOffsets.add(legalOffset);
+        String customMessage = this + " is blocked by " + threat + "\n" + "Legal Offset:" + "\n" +  this.legalOffsets;
+        this.game.showMessage(customMessage);
+    }
+
     @Override
     public String toString() {
         if (getPieceSide().equals(Side.WHITE)) {
             return String.valueOf(getClass().getSimpleName().toCharArray()[0]);
         }
         return String.valueOf(getClass().getSimpleName().toCharArray()[0]).toLowerCase();
-    }
-
-    public void setDefends(Piece threat, int legalOffset) {
-        System.out.println(this + " defends King from " + threat +  " // legalOffset: "  + legalOffset);
-        this.isDefends = true;
-    }
-
-    public void removeThreat(Piece threat) {
-        this.threats.remove(threat);
-        if (this.threats.size() == 0) this.isDefends = false;
     }
 
     @Override

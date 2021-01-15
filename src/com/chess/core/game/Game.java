@@ -114,4 +114,9 @@ public class Game {
     public void showCheckMatePopup(Player player) {
         this.mainFrame.showCheckMatePopup(player.toString());
     }
+
+    public void showMessage(String message) {
+        this.mainFrame.showCustomPopup(message);
+    }
+
 }
