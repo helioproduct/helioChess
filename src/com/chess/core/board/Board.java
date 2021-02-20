@@ -17,8 +17,8 @@ public class Board {
     private King whiteKing;
     private King blackKing;
     
-    private final HashSet<Piece> currentWhitePieces = new HashSet<>();
-    private final HashSet<Piece> currentBlackPieces = new HashSet<>();
+    public final HashSet<Piece> currentWhitePieces = new HashSet<>();
+    public final HashSet<Piece> currentBlackPieces = new HashSet<>();
 
     public Board(Game game) {
         this.game = game;
@@ -55,8 +55,14 @@ public class Board {
 
     public void removePiece(int position) {
         final Piece pieceToRemove = this.getPiece(position);
-        if (pieceToRemove.getPieceSide().equals(Side.WHITE)) this.currentWhitePieces.remove(pieceToRemove);
-        else this.currentBlackPieces.remove(pieceToRemove);
+        if (pieceToRemove.getPieceSide().equals(Side.WHITE)) {
+            this.currentWhitePieces.remove(pieceToRemove);
+            System.out.println("removed " + pieceToRemove);
+        }
+        else {
+            this.currentBlackPieces.remove(pieceToRemove);
+            System.out.println("removed " + pieceToRemove);
+        }
         board[position].clearTile();
     }
 
@@ -71,7 +77,9 @@ public class Board {
     }
 
     public void updateLegalMoves(Side side) {
-        for (Piece piece : getPieces(side)) piece.calculateLegalMoves();
+        for (Piece piece : getPieces(side)) {
+            piece.calculateLegalMoves();
+        }
     }
 
     public void changePiecePosition(final Move move) {

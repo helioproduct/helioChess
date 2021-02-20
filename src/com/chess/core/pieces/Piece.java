@@ -18,11 +18,6 @@ public abstract class Piece {
 
     protected HashSet<Move> legalMoves = new HashSet<>(32);
 
-    /*
-    If a piece is blocked, then it can move only without subjecting the king to check
-    */
-    private HashSet<Integer> legalOffsets = new HashSet<>();
-
     private int movesAmount = 0;
     private final int cachedHashCode;
 
@@ -93,12 +88,6 @@ public abstract class Piece {
             i += 1;
         }
         return positions;
-    }
-
-    public void block(Piece threat, int legalOffset) {
-        this.legalOffsets.add(legalOffset);
-        String customMessage = this + " is blocked by " + threat + "\n" + "Legal Offset:" + "\n" +  this.legalOffsets;
-        this.game.showMessage(customMessage);
     }
 
     @Override

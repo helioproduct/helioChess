@@ -36,6 +36,11 @@ public abstract class Player {
             // Player making move
             if (isMoveLegal(move)) {
                 this.game.movePiece(move);
+
+                System.out.println(this.getBoard().currentWhitePieces);
+                System.out.println(this.getBoard().currentBlackPieces);
+                System.out.println();
+
                 nextMove();
             } else {
             /*

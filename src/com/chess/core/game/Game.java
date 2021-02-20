@@ -74,11 +74,8 @@ public class Game {
                 isFirstClick = false;
             }
         }
-
         // Forward for processing to the current player
-        else {
-            getPlayer(sideToMove).makeMove(this.activePiece, tilePosition);
-        }
+        else getPlayer(sideToMove).makeMove(this.activePiece, tilePosition);
     }
 
     public Board getBoard() {
@@ -106,7 +103,10 @@ public class Game {
         this.mainFrame.removeLegalMoves(this.activeTilesPositions);
     }
 
-    // Messages
+    /*
+    Messages
+     */
+
     public void showCheckPopup(Piece threat) {
         this.mainFrame.showCheckPopup(threat.getClass().getSimpleName());
     }
@@ -115,8 +115,9 @@ public class Game {
         this.mainFrame.showCheckMatePopup(player.toString());
     }
 
-    public void showMessage(String message) {
-        this.mainFrame.showCustomPopup(message);
+    // Shows custom Message
+    public void showMessage(String customMessage) {
+        this.mainFrame.showCustomPopup(customMessage);
     }
 
 }
