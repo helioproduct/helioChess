@@ -1,2 +1,2 @@
 # helioChess
-helioChess - chess for helios
+helioChess - chess game
